@@ -1,6 +1,9 @@
 # 北京科技大学试卷 LaTeX 模板
 
-## 几点说明
+## 试卷效果
+![](USTBExam-demo_页面_1.png)
+![](USTBExam-demo_页面_2.png)
+![](USTBExam-demo_页面_3.png)
 
 ### 支持的 feature
 
