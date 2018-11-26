@@ -162,7 +162,7 @@
           \rotatebox{-90}{
             \parbox{1em}{装订线内不要答题}
             }\\[-3\smallskipamount]
-          \hdashrule[-3ex]{\textheight}{1pt}{2pt}
+          \hdashrule[-3ex]{\textheight}{.5pt}{1pt}
         \end{center}
       \end{minipage}
     }
