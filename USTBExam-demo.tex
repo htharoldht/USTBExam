@@ -1,18 +1,37 @@
 % !TEX encode = UTF-8
 % !TEX program = xelatex
-\documentclass{USTBExam}
+\documentclass[answer]{USTBExam}
+% \documentclass[noanswer]{USTBExam}
 
-\answerfalse %不显示答案
+\usepackage{HTNotes-math}
 
-\newcommand{\cov}{\operatorname{cov}}
+% =================================================
+%       PDF信息
+% =================================================
+% PDF信息里的标题栏
+\title{2018-2019学年第一学期微积分AI模拟试卷}
+% PDF信息里的作者栏
+\author{黄腾}
+% PDF信息里的主题
+\Subject{nothing}
+% PDF信息里的关键词
+\Keywords{高数; 微积分; 期末; 模拟试卷}
+
+% =================================================
+%       试卷头信息
+% =================================================
+% 试卷头里的年份
+\Year{2018--2019}
+% 试卷头里的学期
+\Semester{一}
+% 试卷头里的课程
+\Course{微积分AI}
+% 试卷头里的类型，如A/B/模拟等
+\Type{模拟}
+% 试卷头计分表中大题的数目
+\TotalPart{4}
 
 \begin{document}
-
-\renewcommand{\niandu}{2017--2018}
-\renewcommand{\xueqi}{二}
-\renewcommand{\kecheng}{微积分AII}
-\renewcommand{\shijuan}{A}
-\setcounter{TotalPart}{4}
 
 % 生成试卷表头
 \makehead
