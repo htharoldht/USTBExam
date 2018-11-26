@@ -210,9 +210,9 @@
   \stepcounter{problem}
   \arabic{problem}.\ignorespaces
 }{\par}
-\newenvironment{solutionreal}{\textsf{解}\quad\ignorepars}{\hfill\ensuremath{\square}\bigskip\par}
-\newenvironment{proofreal}{\textsf{证明}\quad\ignorepars}{\hfill\ensuremath{\square}\bigskip\par}
-\newenvironment{analysisreal}{\textsf{解析}\quad\ignorepars}{\hfill\ensuremath{\square}\bigskip\par}
+\newenvironment{solutionreal}{\textsf{解}\quad\ignorepars}{\ifanswer\hfill\ensuremath{\square}\bigskip\fi\par}
+\newenvironment{proofreal}{\textsf{证明}\quad\ignorepars}{\ifanswer\hfill\ensuremath{\square}\bigskip\fi\par}
+\newenvironment{analysisreal}{\textsf{解析}\quad\ignorepars}{\ifanswer\hfill\ensuremath{\square}\bigskip\fi\par}
 
 \newenvironment{problem}{\problemreal}{\endproblemreal}
 \newenvironment{solution}{\solutionreal}{\endsolutionreal}
@@ -223,6 +223,7 @@
   \ifanswer\else
     \excludecomment{solution}
     \excludecomment{proof}
+    \excludecomment{analysis}
   \fi
 }
 
