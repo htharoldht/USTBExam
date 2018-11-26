@@ -212,10 +212,12 @@
 }{\par}
 \newenvironment{solutionreal}{\textsf{解}\quad\ignorepars}{\par}
 \newenvironment{proofreal}{\textsf{证明}\quad\ignorepars}{\par}
+\newenvironment{analysisreal}{\textsf{解析}\quad\ignorepars}{\par}
 
 \newenvironment{problem}{\problemreal}{\endproblemreal}
 \newenvironment{solution}{\solutionreal}{\endsolutionreal}
 \newenvironment{proof}{\proofreal}{\endproofreal}
+\newenvironment{analysis}{\analysisreal}{\endanalysisreal}
 
 \AtBeginDocument{
   \ifanswer\else
