@@ -43,8 +43,8 @@
     pdfinfo={
       Title    = {\@title},
       Author   = {\@author},
-      Subject  = {\Subject},
-      Keywords = {\Keywords},
+      Subject  = {\USTB@Subject},
+      Keywords = {\USTB@Keywords},
     },
     colorlinks = true,
     hidelinks  = true,
@@ -54,12 +54,14 @@
 \setlength{\lineskiplimit}{3pt}
 \setlength{\lineskip}{3pt}
 
-\newcommand{\Subject}{}
-\newcommand{\Keywords}{}
-\newcommand{\niandu}{}
-\newcommand{\xueqi}{}
-\newcommand{\kecheng}{}
-\newcommand{\shijuan}{}
+\newcommand{\Subject}[1]{\def\USTB@Subject{#1}}
+\newcommand{\Keywords}[1]{\def\USTB@Keywords{#1}}
+\newcommand{\Year}[1]{\def\USTB@Year{#1}}
+\newcommand{\Semester}[1]{\def\USTB@Semester{#1}}
+\newcommand{\Course}[1]{\def\USTB@Course{#1}}
+\newcommand{\Type}[1]{\def\USTB@Type{#1}}
+\newcommand{\TotalPart}[1]{\setcounter{TotalPart}{#1}}
+
 \newcommand{\underspace}[1]{\underline{\hspace{#1}}}
 
 \newcounter{TotalPart}
@@ -126,8 +128,8 @@
 % 试卷头制作
 \newcommand{\makehead}{
   \begin{center}
-    \parbox{\textwidth}{\centering \LARGE \bfseries 北京科技大学 \niandu 学年 \, 第~\xueqi~学期 \\
-    \underline{\quad \kecheng \quad} \, 试卷（\shijuan 卷 \ifanswer{解析}\fi）}
+    \parbox{\textwidth}{\centering \LARGE \bfseries 北京科技大学 \USTB@Year 学年 \, 第~\USTB@Semester~学期 \\
+    \underline{\quad \USTB@Course \quad} \, 试卷（\USTB@Type 卷 \ifanswer{解析}\fi）}
 
     \vspace{1em}
     院(系) \hrulefill~  班级 \hrulefill~
@@ -138,7 +140,7 @@
   \end{center}
 }
 
-\newcommand{\my@foottext}{\kecheng 试卷 \ifanswer{解析}\fi \quad 第~\thepage~页~共~\pageref{LastPage}~页}
+\newcommand{\my@foottext}{\USTB@Course 试卷 \ifanswer{解析}\fi \quad 第~\thepage~页~共~\pageref{LastPage}~页}
 
 % 去掉页眉下划线
 \renewcommand{\headrulewidth}{0pt}
