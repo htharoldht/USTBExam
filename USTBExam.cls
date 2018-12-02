@@ -128,12 +128,13 @@
 % 试卷头制作
 \newcommand{\makehead}{
   \begin{center}
-    \parbox{\textwidth}{\centering \LARGE \bfseries 北京科技大学 \USTB@Year 学年 \, 第~\USTB@Semester~学期 \\
-    \underline{\quad \USTB@Course \quad} \, 试卷（\USTB@Type 卷 \ifanswer{解析}\fi）}
+    \parbox{\textwidth}{\centering \bfseries {\zihao{3} 北京科技大学 \USTB@Year 学年 \, 第~\USTB@Semester~学期} \\[\medskipamount]
+    {\zihao{-2} \underline{\quad \USTB@Course \quad} \, 试卷（\USTB@Type 卷 \ifanswer{解析}\fi）}}
 
     \vspace{1em}
+    {\zihao{-4}
     院(系) \hrulefill~  班级 \hrulefill~
-    姓名 \hrulefill~  学号 \hrulefill\mbox{}
+    姓名 \hrulefill~  学号 \hrulefill\mbox{}}
     \vspace{0.5em}
     \ifthenelse{\theTotalPart=0}{}{\ifthenelse{\theTotalPart<6}{\ScoreTableA}{\ScoreTableB}}
     \vspace*{-2em}
