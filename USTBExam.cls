@@ -220,6 +220,8 @@
 \newenvironment{proof}{\proofreal}{\endproofreal}
 \newenvironment{analysis}{\analysisreal}{\endanalysisreal}
 
+\newcommand{\vempty}[1]{\ifanswer\else\vspace{#1}\fi}
+
 \AtBeginDocument{
   \ifanswer\else
     \excludecomment{solution}
