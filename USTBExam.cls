@@ -28,7 +28,6 @@
 % \RequirePackage{environ}
 \RequirePackage{calc}
 \RequirePackage{graphicx}
-\RequirePackage{dashrule}
 \RequirePackage{ifthen}
 \RequirePackage{enumitem}
 \RequirePackage{CJKnumb}
@@ -36,6 +35,7 @@
 \RequirePackage{tabularx}
 \RequirePackage{interfaces-makecell}
 % \RequirePackage{zref-lastpage}
+\RequirePackage{tikz}
 
 \RequirePackage{hyperref,etoolbox}
 \AtBeginDocument{%
@@ -128,13 +128,12 @@
 % 试卷头制作
 \newcommand{\makehead}{
   \begin{center}
-    \parbox{\textwidth}{\centering \bfseries {\zihao{3} 北京科技大学 \USTB@Year 学年 \, 第~\USTB@Semester~学期} \\[\medskipamount]
-    {\zihao{-2} \underline{\quad \USTB@Course \quad} \, 试卷（\USTB@Type 卷 \ifanswer{解析}\fi）}}
+    \parbox{\textwidth}{\centering \LARGE \bfseries 北京科技大学 \USTB@Year 学年 \, 第~\USTB@Semester~学期 \\
+    \underline{\quad \USTB@Course \quad} \, 试卷（\USTB@Type 卷 \ifanswer{解析}\fi）}
 
     \vspace{1em}
-    {\zihao{-4}
     院(系) \hrulefill~  班级 \hrulefill~
-    姓名 \hrulefill~  学号 \hrulefill\mbox{}}
+    姓名 \hrulefill~  学号 \hrulefill\mbox{}
     \vspace{0.5em}
     \ifthenelse{\theTotalPart=0}{}{\ifthenelse{\theTotalPart<6}{\ScoreTableA}{\ScoreTableB}}
     \vspace*{-2em}
@@ -147,27 +146,24 @@
 \renewcommand{\headrulewidth}{0pt}
 % 装订线页眉外侧超宽6em
 \fancyheadoffset[L]{6em}
-
 \fancyhf{}
-\pagestyle{fancy}{
-  \cfoot{\small\my@foottext}
-  \lhead{
-    \ifthenelse{\isodd{\thepage}}{
-    \rotatebox{90}{
-      \begin{minipage}{1.1\textheight}
-        \begin{center}
-          \rotatebox{-90}{
-            \parbox{1em}{
-              自觉遵守考试规则\quad\hspace*{5pt}，诚信考试\quad\hspace*{5pt}，绝不作弊}
-            }\\[\smallskipamount]
-          \rotatebox{-90}{
-            \parbox{1em}{装订线内不要答题}
-            }\\[-3\smallskipamount]
-          \hdashrule[-3ex]{\textheight}{.5pt}{1pt}
-        \end{center}
-      \end{minipage}
-    }
+\pagestyle{fancy}
+\cfoot{\small\my@foottext}
+\lhead{
+  \ifthenelse{\isodd{\thepage}}{
+    \mifengxian
   }{}
+}
+
+\newcommand{\mifengxian}{
+  \begin{tikzpicture}[remember picture,overlay,very thick,font=\normalsize]
+    \path (current page.south west) +(2.5cm,1cm)  coordinate (a);
+    \path (current page.north west) +(2.5cm,-1cm) coordinate (b);
+    \node[text width=1em, xshift=1cm] at (current page.west) {
+    自觉遵守考试规则\quad\hspace*{5pt}，诚信考试\quad\hspace*{5pt}，绝不作弊};
+    \node[text width=1em, xshift=2cm] at (current page.west) {装订线内不要答题};
+    \draw[dashed] (a) -- (b);
+  \end{tikzpicture}
 }
 
 \newcounter{problem}
@@ -220,8 +216,6 @@
 \newenvironment{proof}{\proofreal}{\endproofreal}
 \newenvironment{analysis}{\analysisreal}{\endanalysisreal}
 
-\newcommand{\vempty}[1]{\ifanswer\else\vspace{#1}\fi}
-
 \AtBeginDocument{
   \ifanswer\else
     \excludecomment{solution}
@@ -252,27 +246,27 @@
   \setlength{\lquarter}{0.25\linewidth}
   \ifthenelse{\lengthtest{\lmax>\lhalf}}
   {
-  \begin{enumerate}[label=(\Alph*),parsep=0ex,itemsep=0ex,leftmargin=2em, topsep=0ex]
-    \item #1
-    \item #2
-    \item #3
-    \item #4
-        \end{enumerate}
-    }
+    \begin{enumerate}[label=(\Alph*),parsep=0ex,itemsep=0ex,leftmargin=2em, topsep=0ex]
+      \item #1
+      \item #2
+      \item #3
+      \item #4
+    \end{enumerate}
+  }
+  {
+    \ifthenelse{\lengthtest{\lmax>\lquarter}}
     {
-        \ifthenelse{\lengthtest{\lmax>\lquarter}}
-        {
       \makebox[\lhalf][l]{(A)~#1~~~}%
       \makebox[\lhalf][l]{(B)~#2~~~}%
 
       \makebox[\lhalf][l]{(C)~#3~~~}%
       \makebox[\lhalf][l]{(D)~#4~~~}%
-        }
-        {
+    }
+    {
       \makebox[\lquarter][l]{(A)~#1~~~}%
       \makebox[\lquarter][l]{(B)~#2~~~}%
       \makebox[\lquarter][l]{(C)~#3~~~}%
       \makebox[\lquarter][l]{(D)~#4~~~}%
-        }
     }
+  }
 }
