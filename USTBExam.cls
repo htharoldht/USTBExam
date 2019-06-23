@@ -216,6 +216,9 @@
 \newenvironment{proof}{\proofreal}{\endproofreal}
 \newenvironment{analysis}{\analysisreal}{\endanalysisreal}
 
+% 增加只在试卷里面换页的命令
+\newcommand{\mynewpage}{\ifanswer\else\newpage\fi}
+
 \AtBeginDocument{
   \ifanswer\else
     \excludecomment{solution}
