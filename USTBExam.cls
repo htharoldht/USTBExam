@@ -218,6 +218,7 @@
 
 % 增加只在试卷里面换页的命令
 \newcommand{\mynewpage}{\ifanswer\else\newpage\fi}
+\newcommand{\myvfill}{\ifanswer\else\vfill\fi}
 
 \AtBeginDocument{
   \ifanswer\else
