@@ -29,7 +29,7 @@
 \RequirePackage{calc}
 \RequirePackage{graphicx}
 \RequirePackage{ifthen}
-\RequirePackage{enumitem}
+\RequirePackage[shortlabels]{enumitem}
 \RequirePackage{CJKnumb}
 \RequirePackage{makecell}
 \RequirePackage{tabularx}
