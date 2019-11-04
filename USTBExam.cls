@@ -194,11 +194,11 @@
 }
 
 \newcommand{\pickout}[1]{
-  \hfill(\makebox[1.5em]{\answer{#1}})
+  \hfill【\makebox[1.5em]{\answer{#1~}}】
 }
 
 \newcommand{\pickin}[1]{
-  (\makebox[1.5em]{\answer{#1}})
+  【\makebox[1.5em]{\answer{#1~}}】
 }
 
 \newcommand{\ignorepars}{\@ifnextchar\par{\expandafter\ignorepars\@gobble}{}}
@@ -219,6 +219,7 @@
 % 增加只在试卷里面换页的命令
 \newcommand{\mynewpage}{\ifanswer\else\newpage\fi}
 \newcommand{\myvfill}{\ifanswer\else\vfill\fi}
+\newcommand{\vempty}[1]{\ifanswer\else\vspace*{#1}\fi}
 
 \AtBeginDocument{
   \ifanswer\else
