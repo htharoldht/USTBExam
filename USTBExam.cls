@@ -33,7 +33,6 @@
 \RequirePackage{CJKnumb}
 \RequirePackage{makecell}
 \RequirePackage{tabularx}
-\RequirePackage{interfaces-makecell}
 % \RequirePackage{zref-lastpage}
 \RequirePackage{tikz}
 
@@ -70,6 +69,50 @@
 
 \setcounter{TotalPart}{1}
 
+\ExplSyntaxOn
+% we need LaTeX counters and not expl3 ones because of tabularx two-step process
+\newcounter{repeatstart}
+\newcounter{repeatcurrent}
+\newcounter{repeatlast}
+
+\NewDocumentCommand{\repeatcell}{mm}
+ {% #1 = number of repeats
+  % #2 = key-value pairs
+  \oaheix_repeatcell:nn { #1 } { #2 }
+ }
+
+\tl_new:N \l__oaheix_repeatcells_body_tl
+
+\keys_define:nn { oaheix/repeatcells }
+ {
+  text .code:n = \cs_gset_protected:Nn \__oaheix_repeatcell_text:n { #1 },
+  start .code:n = \setcounter{repeatstart}{#1},
+ }
+
+\cs_new_protected:Nn \oaheix_repeatcell:nn
+ {
+  \keys_set:nn { oaheix/repeatcells } { #2 }
+  \tl_clear:N \l__oaheix_repeatcells_body_tl
+  \int_step_inline:nnn
+   { \value{repeatstart} + 1 }
+   { \value{repeatstart} + #1 }
+   {
+    \tl_put_right:Nx \l__oaheix_repeatcells_body_tl
+     {
+      \int_compare:nF { ##1 = \value{repeatstart} + 1 } { & }
+      \__oaheix_repeatcell_text:n { ##1 }
+     }
+   }
+  \tl_use:N \l__oaheix_repeatcells_body_tl
+  \setcounter{repeatlast} { \int_eval:n { \value{repeatstart} + #1 } }
+ }
+
+\NewExpandableDocumentCommand{\lastvalue}{}{\int_eval:n { \value{repeatlast} } }
+
+\AtBeginEnvironment{tabularx}{\setcounter{repeatstart}{0}}
+
+\ExplSyntaxOff
+
 % 计分表制作
 \newcommand{\ScoreTableA}{
   \setcounter{SubColumn}{\value{TotalPart}+2}
@@ -86,7 +129,7 @@
     \\
     \cline{1-\theSubColumn}
       \hfill 题 \hfill 号 \hfill~
-      & \repeatcell{\theTotalPart}{text=\CJKnumber{\column}}
+      & \repeatcell{\theTotalPart}{text=\CJKnumber{##1}}
       & \hfill 小 \hfill 计 \hfill~
       & & &
     \\
@@ -113,7 +156,7 @@
     \\
     \cline{1-\theSubColumn}
       题号
-      & \repeatcell{\theTotalPart}{text=\CJKnumber{\column}}
+      & \repeatcell{\theTotalPart}{text=\CJKnumber{##1}}
       & 小计
       & & &
     \\
