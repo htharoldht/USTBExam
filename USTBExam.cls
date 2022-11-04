@@ -129,7 +129,7 @@
     \\
     \cline{1-\theSubColumn}
       \hfill 题 \hfill 号 \hfill~
-      & \repeatcell{\theTotalPart}{text=\CJKnumber{##1}}
+      & \repeatcell{\theTotalPart}{text={\CJKnumber{##1}}}
       & \hfill 小 \hfill 计 \hfill~
       & & &
     \\
@@ -156,7 +156,7 @@
     \\
     \cline{1-\theSubColumn}
       题号
-      & \repeatcell{\theTotalPart}{text=\CJKnumber{##1}}
+      & \repeatcell{\theTotalPart}{text={\CJKnumber{##1}}}
       & 小计
       & & &
     \\
@@ -183,7 +183,7 @@
   \end{center}
 }
 
-\newcommand{\my@foottext}{\USTB@Course 试卷 \ifanswer{解析}\fi \quad 第~\thepage~页~共~\pageref{LastPage}~页}
+\newcommand{\my@foottext}{\USTB@Year 学年 \USTB@Course 试卷 （\USTB@Type 卷 ） \ifanswer{解析}\fi\quad 第~\thepage~页~共~\pageref{LastPage}~页}
 
 % 去掉页眉下划线
 \renewcommand{\headrulewidth}{0pt}
@@ -236,8 +236,8 @@
   \underline{\hspace{0.5em}\answer{#1}\hspace{0.5em}}
 }
 
-\newcommand{\pickout}[1]{
-  \hfill【\makebox[1.5em]{\answer{#1~}}】
+\newcommand{\pickout}[1]{%
+  \hphantom{~~~}\hfill【\makebox[1.5em]{\answer{#1~}}】
 }
 
 \newcommand{\pickin}[1]{
@@ -290,11 +290,11 @@
   \ifthenelse{\lengthtest{\xxla>\xxlb}}{\setlength{\lmax}{\xxla}}{\setlength{\lmax}{\xxlb}}
   \ifthenelse{\lengthtest{\xxlc>\lmax}}{\setlength{\lmax}{\xxlc}}{}
   \ifthenelse{\lengthtest{\xxld>\lmax}}{\setlength{\lmax}{\xxld}}{}
-  \setlength{\lhalf}{0.5\linewidth}
-  \setlength{\lquarter}{0.25\linewidth}
+  \setlength{\lhalf}{0.5\textwidth}
+  \setlength{\lquarter}{0.25\textwidth}
   \ifthenelse{\lengthtest{\lmax>\lhalf}}
-  {
-    \begin{enumerate}[label=(\Alph*),parsep=0ex,itemsep=0ex,leftmargin=2em, topsep=0ex]
+  {%
+    \begin{enumerate}[label=(\Alph*),parsep=0ex,itemsep=0ex,leftmargin=2em,topsep=0ex]
       \item #1
       \item #2
       \item #3
