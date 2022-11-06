@@ -1,8 +1,12 @@
 # 北京科技大学试卷 LaTeX 模板
 
-用 `exam-zh` 进行了重构, 基本没有做破坏性更新
+用 [exam-zh](https://gitee.com/xkwxdyy/exam-zh) 进行了重构, 基本没有做破坏性更新
 
-`\mynewpage`、`vempty`已废弃
+基于 `exam-zh` 的先进性, 你可以在此获得更好的格式与内容分离体验, 基本上只需要进行专注题目解析的录入
+
+此模板基本就只是在 `exam-zh` 的基础上进行了定制, 故更加完善的使用说明应去[上游](https://gitee.com/xkwxdyy/exam-zh)查看.
+
+注:`\mynewpage`、`\vempty`已废弃
 
 ## 试卷效果
 
