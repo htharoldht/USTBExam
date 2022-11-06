@@ -242,7 +242,7 @@
 \NewDocumentEnvironment{analysis}{}
   {\begin{solution}[label-content=解析,blank-type=none]}{\end{solution}}
 \RenewDocumentEnvironment{proof}{}
-  {\begin{solution}[label-content=证明,blank-type=none]}{\end{solution}}
+  {\begin{solution}[label-content=证明,blank-type=hide]}{\end{solution}}
 
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
