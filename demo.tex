@@ -1,0 +1,418 @@
+% !TEX encoding = UTF-8
+% !TEX program = xelatex
+\documentclass{USTBExam}
+
+\usepackage{fontawesome}
+% =================================================
+%       PDF信息
+% =================================================
+% PDF信息里的作者栏
+\author{北京科技大学学生学习与发展指导中心·朋辈讲师团·高数组·黄腾}
+% PDF信息里的主题
+\Subject{版权所有，未经允许，不允许任何组织和部门以任何形式盗用}
+% PDF信息里的关键词
+\Keywords{高数; 微积分; 期中}
+
+% =================================================
+%       试卷头信息
+% =================================================
+% 试卷头里的年份
+\Year{2020}
+% 试卷头里的学期
+\Semester{一}
+% 试卷头里的课程
+\Course{微积分AI}
+% 是否期中
+\Suffix{}
+% 试卷头里的类型，如A/B/模拟等
+\Type{A}
+% 试卷头计分表中大题的数目
+\TotalPart{4}
+
+\begin{document}
+\maketitle
+
+\section{填空题（本题共10小题，每题4分，满分40分）}
+
+\begin{problem}
+  ~$\lim _{x \to 0} \frac{\sin (\sin (\sin x))}{\tan x}=$
+  \fillin[1].
+\end{problem}
+
+\begin{analysis}
+  原式$=\lim_{x \to 0} \frac{\sin\left( \sin x \right)}{x} = \lim_{x \to 0} \frac{\sin x}{x} = 1$.
+\end{analysis}
+
+\begin{problem}
+  ~$\lim _{x \to 0}\left(\frac{1}{x^{2}}-\frac{1}{x \tan x}\right)=$
+  \fillin[$\frac{1}{3}$].
+\end{problem}
+
+\begin{analysis}
+  原式$=\lim_{x \to 0} \frac{\tan x - x}{x^2 \tan x} = \lim_{x \to 0} \frac{\frac{1}{3}x^3}{x^3} = \frac{1}{3}$.
+
+  \faMortarBoard~ $1 - \cos x \sim \frac{1}{2}x^2$, 两边同时积分可知$x - \sin x \sim \frac{1}{6}x^3$，
+
+  又$\tan x - \sin x = \tan x \left( 1 - \cos x \right) \sim x \left( \frac{1}{2}x^2 \right) = \frac{1}{2}x^3$，
+
+  则知$\tan x - x = \left( \tan x - \sin x \right) - \left( x - \sin x \right) \sim \frac{1}{2}x^3 - \frac{1}{6} x^3 = \frac{1}{3}x^6$.
+\end{analysis}
+
+\begin{problem}
+  ~$\lim _{x \to 0} \frac{x \upe^{x}-\ln (1+x)}{x^{2}}=$
+  \fillin[$\frac{3}{2}$].
+\end{problem}
+
+\begin{analysis}
+  原式$=\lim_{x \to 0} \frac{x \left[ 1+x+o(x) \right] - \left[ x - \frac{1}{2}x^2 +o(x^2) \right]}{x^2} = \lim_{x \to 0} \frac{\frac{3}{2}x^2}{x^2} = \frac{3}{2}$.
+
+  \faMortarBoard 由于分母为二次，故分子只需最高次出现二次，所以$\upe^x$只需展开到一阶.
+\end{analysis}
+
+\begin{problem}
+  设 $f(x)=
+    \begin{cases}
+      \frac{\sin 2 x+\upe^{2 a \sin x}-1}{x}, & \quad x \neq 0 \\
+      a,                                      & \quad x=0
+    \end{cases}
+  $ 在 $x=0$ 处连续, 则 $a=$
+  \fillin[$-2$].
+\end{problem}
+
+\begin{analysis}
+  连续要求极限值等于函数值，即$\lim _{x \to 0} f(x) = f(x)$
+
+  即$a = \lim _{x \to 0} \frac{\sin 2 x+\upe^{2 a \sin x}-1}{x} = \lim _{x \to 0} \frac{\sin 2 x}{x} + \frac{\upe^{2 a \sin x}-1}{x} = \lim _{x \to 0} \frac{2x}{x} + \lim _{x \to 0} \frac{2 a x}{x} = 2+2a$, 即$2+2a=0$, $a=-2$.
+\end{analysis}
+
+\begin{problem}
+  若函数 $f(x)=\lim _{n \to \infty} \sqrt[n]{x^{n}+\left(\frac{x^{2}}{2}\right)^{n}}(x \geq 0)$, 则 $f(3)=$
+  \fillin[$\frac{9}{2}$].
+\end{problem}
+
+\begin{analysis}
+  $f(x)=\max\left\{ x, \frac{x^2}{2} \right\}$，$f(x) =
+    \begin{cases}
+      x, & x<2 \\ \frac{x^2}{2}, & x \ge 2
+    \end{cases}
+  $, 则$f(3) = \frac{9}{2}$.
+
+  \faMortarBoard 教材1-3第15题结论，$\lim_{n\to \infty} \left( a_{1}^{n}+a_{2}^{n}+\cdots +a_{k}^{n} \right) ^{\tfrac{1}{n}}=\max_{1\leqslant i\leqslant k} \left\{ a_i \right\}$, 夹逼准则证明可见我（黄腾）第一章总复习课件（高数群群文件-习题课讲义里），也可以根号里提出一个最大值的$n$次方，而后利用$\abs{x}<1$时，$x^\infty=0$.
+\end{analysis}
+
+\begin{problem}
+  设 $f(x)$ 是可导函数, 且 $f^{\prime}(x)=\sin ^{2}(\sin (x+1))$, $f(0)=4$, $f(x)$ 的反函数是 $y=\varphi(x)$, 则 $\varphi^{\prime}(4)=$
+  \fillin[$\frac{1}{\sin^2\left( \sin 1 \right)}$].
+\end{problem}
+
+\begin{analysis}
+  根据反函数与函数的关系可知$\varphi(4) = 0$, 根据反函数与函数导数的关系可知$\varphi'(4) = \frac{1}{f'(0)} = \frac{1}{\sin^2 (\sin 1)}$.
+\end{analysis}
+
+\begin{problem}
+  若 $f(x)=\left(x^{2000}-1\right) \arctan \frac{2\left(x^{2}+1\right)}{1+2 x^{2}+x^{3}}$, 则 $f^{\prime}(1)=$
+  \fillin[$500 \pi $].
+\end{problem}
+
+\begin{analysis}
+  在只计算点态（具体某一点）处导数时，用导数的定义计算导数会更简便.
+  \begin{align*}
+    f'(x) & = \lim_{x \to 1} \frac{f(x) - f(1)}{x - 1} = \lim_{x \to 1} \frac{f(x) - 0}{x - 1} = \lim_{x \to 1} \frac{\left(x^{2000}-1\right) \arctan \frac{2\left(x^{2}+1\right)}{1+2 x^{2}+x^{3}}}{x - 1} \\
+          & = \lim_{x \to 1} \frac{\left(x^{2000}-1\right)}{x - 1}
+    \times \lim_{x \to 1} \arctan \frac{2\left(x^{2}+1\right)}{1+2 x^{2}+x^{3}}
+  \end{align*}
+  根据教材1-4第7题(3)可知$\lim_{x \to 1} \frac{\left(x^{2000}-1\right)}{x - 1} = \lim_{x \to 1} 2000x = 2000$(直接洛必达也可得到),
+
+  $\lim_{x \to 1} \arctan \frac{2\left(x^{2}+1\right)}{1+2 x^{2}+x^{3}}$$= \arctan \frac{4}{4} = \frac{\pi}{4}$,
+    则原式$=2000 \times \frac{\pi}{4} = 500 \pi$.
+\end{analysis}
+
+\begin{problem}
+  设 $y=\upe^{f(x)} f(\ln x)$, 其中 $f(x)$ 可微, 则 $ \dif y=$
+  \fillin[$\left(f^{\prime}(x) \upe^{f(x)} f(\ln x)+\frac{1}{x} \upe^{f(x)} f^{\prime}(\ln x)\right) \dif x$].
+\end{problem}
+
+\begin{analysis}
+  复合函数求导，无解析.
+\end{analysis}
+
+\begin{problem}
+  若 $f(x)$ 在 $x=a$ 处二阶可导, 则 $\lim _{h \to 0} \frac{f(a+h)-f(a)-h f^{\prime}(a)}{h^{2}}=$
+  \fillin[$\frac{1}{2} f''(a) $].
+\end{problem}
+
+\begin{analysis}
+  此题考查Taylor公式.
+
+  将$f(a+h)$在$f(a)$处展开知$f(a+h) = f(a) + hf'(a)+\frac{h^2}{2}f''(a)$
+
+  则原式$= \lim _{h \to 0} \frac{f(a) + hf'(a)+\frac{h^2}{2}f''(a) - f(a) - hf'(a)}{h^2} = \lim _{h \to 0} \frac{\frac{h^2}{2}f''(a)}{h^2} = \frac{f''(a)}{2}$.
+\end{analysis}
+
+\begin{problem}
+  设参数方程 $
+    \begin{cases}
+      x=\ln t \\
+      y=t^{m}
+    \end{cases}
+  $, 则 $\left.\frac{\dif^{n} y}{\dif x^{n}}\right|_{x=1}=$
+  \fillin[$m^n \upe^m$].
+\end{problem}
+
+\begin{analysis}
+  $\frac{\dif y}{\dif t} = mt^{m-1}$, $\frac{\dif x}{\dif t} = \frac{1}{t}$, 则
+  $\frac{\dif y}{\dif x} = \frac{\frac{\dif y}{\dif t}}{\frac{\dif x}{\dif t}} = \frac{mt^{m-1}}{\frac{1}{t}} = mt^m$，则
+  $$\frac{\dif^2 y}{\dif x^2} = \left[ \frac{\dif }{\dif t} \left( \frac{\dif y}{\dif x} \right) \right] \frac{\dif t}{\dif x} = (mt^m)' \times t = m^2 t^m$$
+  则$\frac{\dif^3 y}{\dif x^3} = m^3 t^m, \cdots, \frac{\dif^n y}{\dif x^n} = m^n t^m$，
+  当$x=1$时$t = \upe$，则 $\left.\frac{\dif^{n} y}{\dif x^{n}}\right|_{x=1}=m^n \upe^m$.
+  % \faMortarBoard $n$阶导数的考查在两个方向，一种是利用已知初等函数的$n$阶导数，关键在于将给定式子变形为已有初等函数；另一种是利用数学归纳法去推导出$n$阶导数通项公式. 此题显然为第二种.
+\end{analysis}
+
+\section{单项选择题（本题共10小题，每题4分，满分40分）}
+
+\begin{problem}
+  设当 $x \in(0,+\infty)$ 时, $f(x)=x \sin \frac{1}{x}$, 则在 $(0,+\infty)$ 内
+  \paren[B]
+  \begin{choices}
+    \item $f(x)$ 与 $f^{\prime}(x)$ 都无界
+    \item $f(x)$ 有界, $f^{\prime}(x)$ 无界
+    \item $f(x)$ 与 $f^{\prime}(x)$ 都有界
+    \item $f(x)$ 无界, $f^{\prime}(x)$ 有界
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $f(x)$可能无界的地方为$x \to 0$或$x \to \infty$时，$\lim _{x \to 0} f(x) = \lim _{x \to 0} x \sin \frac{1}{x} = 0$(无穷小量乘以有界量，极限为零)，
+  $\lim _{x \to \infty} f(x) = \lim _{x \to \infty} x \sin \frac{1}{x} = \lim _{x \to \infty} x \times \frac{1}{x} = 1$(等价无穷小替换)
+  即$f(x)$有界.
+  $f'(x) = \sin \frac{1}{x} - \frac{1}{x} \cos \frac{1}{x}$无界，见第一章例3.8(47页).
+\end{analysis}
+
+\begin{problem}
+  $\lim _{n \to \infty} \frac{1}{n}\left( 1+2+3+\cdots+n \right) \sin \frac{x}{n}=$
+  \paren[A]
+  \begin{choices}
+    \item $\frac{x}{2}$
+    \item $0$
+    \item $-\frac{x}{2}$
+    \item $x$
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  原式$=\lim _{n \to \infty} \frac{1}{n} \frac{n(n+1)}{2} \sin \frac{x}{n} = \lim _{n \to \infty} \frac{n+1}{2} \frac{x}{n} = \frac{x}{2}$.
+
+  \faMortarBoard 自变量趋于无穷大时多项式比值的极限，看分子分母多项式的次数，次数相等则为最高次系数表，分子高则为无穷大，分母高则为0.
+\end{analysis}
+
+\begin{problem}
+  设 $f\left(\tfrac{1}{n}\right)=2^{\frac{1}{n}}+3^{\frac{1}{n}}-2$, 当 $n \to \infty$ 时，有
+  \paren[B]
+  \begin{choices}
+    \item $f\left(\tfrac{1}{n}\right)$ 是 $\tfrac{1}{n}$ 的等价无穷小
+    \item $f\left(\tfrac{1}{n}\right)$ 是 $\tfrac{1}{n}$ 同阶但非等价无穷小
+    \item $f\left(\tfrac{1}{n}\right)$ 是 $\tfrac{1}{n}$ 高阶的无穷小
+    \item $f\left(\tfrac{1}{n}\right)$ 是 $\tfrac{1}{n}$ 低阶的无穷小
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $\lim _{n \to \infty} \frac{f(\frac{1}{n})}{\frac{1}{n}} = \lim _{n \to \infty} \frac{2^{\frac{1}{n}}-1}{\frac{1}{n}} + \lim _{n \to \infty} \frac{3^{\frac{1}{n}}-1}{\frac{1}{n}} = \lim _{n \to \infty} \frac{\frac{1}{n} \ln2}{\frac{1}{n}} + \lim _{n \to \infty} \frac{\frac{1}{n}\ln 3}{\frac{1}{n}} = \ln2+\ln3 = \ln 6 \ne 1$，所以选B.
+\end{analysis}
+
+\begin{problem}
+  在区间 $[0, 1]$ 上, 函数 $f(x)=n x(1-x)^{n}$ 的最大值为 $M(n)$, 则 $\lim _{n \to \infty} M(n)=$
+
+  \paren[A]
+  \begin{choices}
+    \item $\upe^{-1}$
+    \item $\upe$
+    \item $\upe^{2}$
+    \item $\upe^{3}$
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  根据均值不等式，当$nx = (1-x)$时取等
+  $$f(x) = nx(1-x)^{n} \le \left( \frac{ nx +1-x + \cdots + 1-x }{n+1} \right)^{n+1} = \left( \frac{n}{n+1} \right)^{n+1}$$
+  也可用求导算极值的方式计算$x=\frac{1}{n+1}$时取极大值
+
+  $\lim _{n \to \infty} M(n) = \lim _{n \to \infty} \left( \frac{n}{n+1} \right)^{n+1} = \lim _{n \to \infty} \left( 1-\frac{1}{n+1} \right)^{n+1} = \upe^{-1}$.
+\end{analysis}
+
+\begin{problem}
+  函数 $f(x)$ 在 $x=0$ 的某个邻域内连续, $f(0)=0$, $\lim _{x \to 0} \frac{f(x)}{2 \sin ^{2} \frac{x}{2}}=1$, 则 $f(x)$ 在 $x=0$
+  \paren[D]
+  \begin{choices}
+    \item 不可导
+    \item 可导且 $f^{\prime}(0) \neq 0$
+    \item 取得极大值
+    \item 取得极小值
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $f(x)$在$x=0$时连续，$f(0) = \lim_{x \to 0} f(x) = \lim _{x \to 0} \left[ \frac{f(x)}{2 \sin ^{2} \frac{x}{2}} \left( 2 \sin ^{2} \frac{x}{2} \right) \right] = \lim _{x \to 0} \frac{f(x)}{2 \sin ^{2} \frac{x}{2}} \times \lim _{x \to 0} 2 \sin ^{2} \frac{x}{2} = 1 \times 0 = 0$.
+
+  导数存在性: $f^{\prime}(0)=\lim _{x \to 0} \frac{f(x)-f(0)}{x-0}
+    = \lim _{x \to 0}\left[ \frac{f(x)}{2 \sin ^{2} \frac{x}{2}} \cdot \frac{2 \sin ^{2} \frac{x}{2}}{x} \right]
+    = 1 \times 0 = 0$, 则 $f^{\prime}(0)$ 存在, 且 $f^{\prime}(0)=0$,
+
+  极值情况: 由函数极限的部分保号性可知，当 $x \in \dot{U}(0, \delta)$ 时，有$\frac{f(x)-f(0)}{2 \sin ^{2} \frac{x}{2}} > 0$, 又 $2 \sin ^{2} \frac{x}{2} \geqslant 0$, 则有 $f(x)-f(0)>0$, 即 $f(x)$ 在 $x=0$ 处取得极小值.
+\end{analysis}
+
+\begin{problem}
+  曲线 $y=\frac{1}{|x|}$ 的渐近线为
+  \paren[C]
+  \begin{choices}
+    \item 只有水平渐近线
+    \item 只有垂直渐近线
+    \item 既有水平又有垂直渐近线
+    \item 既无垂直又无水平渐近线
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $\lim _{x \to 0} \frac{1}{|x|} = \infty$, 垂直渐近线为$x=0$,
+  $\lim _{x \to \infty} \frac{1}{|x|} = 0$, 水平渐近线为$y=0$.
+\end{analysis}
+
+\begin{problem}
+  已知 $f(x)=x(1-x)(2-x) \cdots (n-x)$, 且 $f^{\prime}(m)=s$, $m \leq n$, $s$ 都是正整数, 则其满足
+  \paren[D]
+  \begin{choices}
+    \item $n !=m s$
+    \item $m !=s n$
+    \item $s !=m n$
+    \item $(-1)^{m} m !(n-m) !=s$
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $m \leq n$说明$f(x)$中一定有$(m-x)$这个因式，则$f(m) = 0$， 且
+  \begin{align*}
+    f'(m) & = \lim_{x \to m} \frac{f(x) - f(m)}{x - m}
+    = \lim_{x \to m} \frac{f(x) - 0}{x - m}                                                    \\
+          & = \lim_{x \to m} \frac{x(1-x)(2-x) \cdots (m-1-x)(m-x)(m+1-x) \cdots (n-x)}{x - m} \\
+          & = - \lim_{x \to m} x(1-x)(2-x) \cdots (m-1-x) (m+1-x) \cdots (n-x)                 \\
+          & = - m(1-m)(2-m) \cdots (m-1-m) \times (m+1-m) \cdots (n-m)                         \\
+          & = - m (-1)^{m-1}(m-1)(m-2) \cdots 1 \times 1 \times \cdots \times (n-m)
+    = (-1)^m m! (n-m)!
+  \end{align*}
+  即$s = (-1)^m m! (n-m)!$.
+\end{analysis}
+
+\begin{problem}
+  若函数 $f(x)$ 在区间 $(a, b)$ 内可导, $x_{1}<x_{2}$ 是区间内的任意两点, 则至少存在一点 $\xi$, 满足
+  \paren[C]
+  \begin{choices}
+    \item $f\left(x_{1}\right)-f(b)=f^{\prime}(\xi)\left(x_{1}-b\right), \xi \in\left(x_{1}, b\right)$
+    \item $f\left(x_{1}\right)-f(a)=f^{\prime}(\xi)\left(x_{1}-a\right), \xi \in\left(a, x_{1}\right)$
+    \item $f\left(x_{1}\right)-f\left(x_{2}\right)=f^{\prime}(\xi)\left(x_{1}-x_{2}\right), \xi \in\left(x_{1}, x_{2}\right)$
+    \item $f(a)-f(b)=f^{\prime}(\xi)(a-b), \xi \in(a, b)$
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  拉格朗日中值定理，应为开区间内成立.
+\end{analysis}
+
+\begin{problem}
+  设函数 $f(-t)=f(t)$, $t \in\left(-\infty, +\infty\right)$, 在 $t \in(-\infty, 0)$ 时, $f^{\prime}(t)>0$, $f^{\prime\prime}(t)<0$, 则当 $t \in(0, +\infty)$ 时, 有
+  \paren[C]
+  \begin{choices}
+    \item $f(t)$ 单调增加且图像是凸的
+    \item $f(t)$ 单调增加且图像是凹的
+    \item $f(t)$ 单调减少且图像是凸的
+    \item $f(t)$ 单调减小且图像是凹的
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $t<0$时，$f^{\prime}(t)>0$说明$f(t)$单调递增, $f^{\prime\prime}(t)<0$说明$f(t)$为凹函数，又$f(-t)=f(t)$说明$f(t)$为偶函数，则$f(t)$在$t>0$时单调递减，且为凸函数.
+\end{analysis}
+
+\begin{problem}
+  函数 $f(x)$ 在$0$点处某邻域内连续, 且 $\lim _{x \to 0} \frac{f(x)}{1-\cos x}=2$, 则在点 $x=0$ 处 $f(x)$
+  \paren[D]
+  \begin{choices}
+    \item 不可导
+    \item 可导且 $f^{\prime}(0)=2$
+    \item 取得极大值
+    \item 取得极小值
+  \end{choices}
+\end{problem}
+
+\begin{analysis}
+  $f(x)$在$x=0$时连续，$f(0) = \lim_{x \to 0} f(x) = \lim _{x \to 0} \left[ \frac{f(x)}{1-\cos x} \left( 1-\cos x \right) \right] = \lim _{x \to 0} \frac{f(x)}{1-\cos x} \times \lim _{x \to 0} 1-\cos x = 1 \times 0 = 0$.
+
+  导数存在性: $f^{\prime}(0)=\lim _{x \to 0} \frac{f(x)-f(0)}{x-0}
+    = \lim _{x \to 0}\left[ \frac{f(x)}{1-\cos x} \cdot \frac{1-\cos x}{x} \right]
+    = 1 \times 0 = 0$, 则 $f^{\prime}(0)$ 存在, 且 $f^{\prime}(0)=0$,
+
+  极值情况: 由函数极限的部分保号性可知，当 $x \in \dot{U}(0, \delta)$ 时，有$\frac{f(x)-f(0)}{1-\cos x} = 2>0$, 又 $1-\cos x \geqslant 0$, 则有 $f(x)-f(0)>0$, 即 $f(x)$ 在 $x=0$ 处取得极小值.
+\end{analysis}
+
+\section{计算题（本题共2小题，每题6分，满分12分）}
+
+\begin{problem}
+  $\lim _{n \to \infty} n\left[\left(1+\frac{1}{n}\right)^{n}-\upe\right]$
+\end{problem}
+
+\begin{solution}
+  倒代换，令$t=\frac{1}{n}$，将原式化为
+
+  \begin{align*}
+    \lim_{t \to 0} \frac{{{(1+t)}^{\frac{1}{t}}}- \upe }{t}
+    = & \lim_{t \to 0} \frac{{{\upe}^{\frac{1}{t}\ln (1+t)}}- \upe }{t}
+    =\lim_{t \to 0} \frac{ \upe \left[ {{\upe}^{\frac{1}{t}\ln (1+t)-1}}-1 \right]}{t} \\
+    = & \upe \lim_{t \to 0} \frac{\frac{1}{t}\ln (1+t)-1}{t}
+    = \upe \lim_{t \to 0} \frac{\ln (1+t)-t}{{{t}^{2}}}
+    = \upe \lim_{t \to 0} \frac{-\frac{1}{2}t^2}{t^2}
+    =-\frac{\upe}{2}
+  \end{align*}
+  即原式$=-\frac{\upe}{2}$.
+\end{solution}
+
+\begin{problem}
+  设函数 $f(x)$ 在 $x=0$ 的某邻域有二阶连续导数, 且 $f(0), f^{\prime}(0), f^{\prime \prime}(0)$ 均不为零, 证明: 存在唯一的一组实数 $k_{1}$, $k_{2}$, $k_{3}$, 使得
+  $$  \lim _{h \to 0} \frac{k_{1} f(h)+k_{2} f(2 h)+k_{3} f(3 h)-f(0)}{h^{2}}=0.  $$
+\end{problem}
+
+\begin{solution}
+  由泰勒公式可得:
+  \begin{align*}
+    f(h)   & = f(0)+f^{\prime}(0) h+\frac{h^{2}}{2 !} f'' (0)+\mathrm{o}\left(h^{2}\right)                \\
+    f(2 h) & = f(0)+f^{\prime}(0) 2 h+2 h^{2} f^{\prime \prime}(0)+o\left(h^{2}\right)                    \\
+    f(3 h) & = f(0)+f^{\prime}(0) 3 h+\frac{9 h^{2}}{2} f^{\prime \prime}(0)+\mathrm{o}\left(h^{2}\right)
+  \end{align*}
+  则可得
+  \begin{align*}
+    0 & = \lim _{h \rightarrow 0} \frac{k_{1} f(h)+k_{2} f(2 h)+k_{3} f(3 h)-f(0)}{h^{2}}                                                                                                                       \\
+      & =\lim _{h \rightarrow 0} \frac{\left(k_{1}+k_{2}+k_{3}-1\right) f(0)+\left(k_{1}+2 k_{2}+3 k_{3}\right) h f^{\prime}(0)+h^{2} \frac{\left(k_{1}+4 k_{2}+9 k_{3}\right)}{2} f^{\prime \prime}(0)}{h^{2}}
+  \end{align*}
+  可得:
+  $$k_{1}+k_{2}+k_{3}=1, \quad k_{1}+2 k_{2}+3 k_{3}=0, \quad k_{1}+4 k_{2}+9 k_{3}=0$$
+  则可以得到唯一的一组解 $k_{1}=3$, $k_{2}=-3$, $k_{3}=1$.
+\end{solution}
+
+\section{证明题（8分）}
+
+\begin{problem}
+  设 $f(x)$ 在 $[a, b]$ 上连续, 在 $(a, b)$ 内可导, 试证至少存在一点 $\xi$, 使得
+  $$f(b)-f(a)=\xi f^{\prime}(\xi)(\ln b-\ln a).$$
+\end{problem}
+
+\begin{proof}
+  由柯西中值定理可知, 当 $f(x)$ 在 $[a, b]$ 上连续, 在 $(a, b)$ 内可导,
+
+  有
+  $\frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f^{\prime}(\xi)}{g^{\prime}(\xi)}$，
+  即
+  $$\frac{f(b)-f(a)}{\ln b-\ln a}=\frac{f^{\prime}(\xi)}{\frac{1}{\xi}}
+    ~\Rightarrow~
+    f(b)-f(a)=\xi f^{\prime}(\xi)(\ln b-\ln a) $$
+  证毕.
+\end{proof}
+
+\end{document}
