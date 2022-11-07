@@ -248,10 +248,10 @@
   fillin/no-answer-type=none,
 }
 
-\NewDocumentEnvironment{analysis}{}
-  {\begin{solution}[label-content=解析,blank-type=none]}{\end{solution}}
-\RenewDocumentEnvironment{proof}{}
-  {\begin{solution}[label-content=证明,blank-type=hide]}{\end{solution}}
+\NewDocumentEnvironment{analysis}{ O{} }
+  {\begin{solution}[label-content=解析,blank-type=none,#1]}{\end{solution}}
+\RenewDocumentEnvironment{proof}{ O{} }
+  {\begin{solution}[label-content=证明,blank-type=hide,#1]}{\end{solution}}
 
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
