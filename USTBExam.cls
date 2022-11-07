@@ -2,6 +2,13 @@
 \RequirePackage{expl3}
 \ProvidesExplClass {USTBExam} {2022-11-04} {v2.0} {An exam template for USTB}
 
+\AddToHook{package/exam-zh-symbols/before}{%
+  \AtBeginDocument{\let\savedsim=\sim}
+}
+\AddToHook{package/exam-zh-symbols/after}{%
+  \AtBeginDocument{\let\sim=\savedsim}
+}
+
 % 加载文档类和宏包
 \LoadClass {exam-zh}
 
@@ -263,3 +270,10 @@
 \renewcommand{\geq}{\geqslant}
 
 \everymath{\displaystyle}
+
+% \AddToHook{package/exam-zh-symbols/before}{%
+%   \AtBeginDocument{\let\savedsim=\sim}
+% }
+% \AddToHook{package/exam-zh-symbols/after}{%
+%   \AtBeginDocument{\global\let\sim=\savedsim}
+% }
