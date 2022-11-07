@@ -17,8 +17,10 @@
 % 定义 ustb-exam 宏包选项
 
 % 是否显示答案
-\bool_new:N \l_ustbexam_show_answer_bool
-\bool_set_true:N \l_ustbexam_show_answer_bool
+% \bool_new:N \l_ustbexam_show_answer_bool
+% \bool_if:NTF \l__examzh_question_show_paren_answer_bool
+%   { \bool_set_true:N \l_ustbexam_show_answer_bool }
+%   { \bool_set_false:N \l_ustbexam_show_answer_bool }
 
 % 试卷头里的年份
 \int_new:N \l_ustbexam_year_int
@@ -65,7 +67,7 @@
 \tl_new:N \l_ustbexam_type_tl
 \NewDocumentCommand \Type { m }
   { \tl_set:Nn \l_ustbexam_type_tl {
-      \bool_if:NTF \l_ustbexam_show_answer_bool
+      \bool_if:NTF \l__examzh_question_show_paren_answer_bool
       {\l_ustbexam_suffix_tl （#1 卷解析）}
       {\l_ustbexam_suffix_tl （#1 卷）}
     }
@@ -124,10 +126,10 @@
       学号~\hrulefill\,
       考试教室~\hrulefill
     \par
-    \vspace{0.5em}
+    % \vspace{0.5em}
     \ScoreTable
     \end { center }
-    \vspace*{-.5em}
+    \vspace*{-1em}
     \begin{notice}[label=说明：][label=\arabic*、,labelsep=0pt]
       \item 要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；
       \item 考场、学院、班、学号、姓名均需写全，不写全的试卷为废卷；
@@ -212,7 +214,7 @@
     odd-info-content = {{装},{订},{线},{内},{不},{要},{答},{题}},
 
     odd-info-xshift = 12mm,
-    text = {自觉遵守考试规则，诚信考试，绝不作弊\\装订线内不要答题},
+    text = {自觉遵守考试规则，诚信考试，绝不作弊},% \\装订线内不要答题},
     text-direction-vertical = true,
     text-width = 0.6\textheight,
     text-format  = \normalfont,
