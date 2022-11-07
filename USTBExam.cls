@@ -24,6 +24,7 @@
 % 定义 ustb-exam 宏包选项
 
 % 是否显示答案
+% 以下弃用
 % \bool_new:N \l_ustbexam_show_answer_bool
 % \bool_if:NTF \l__examzh_question_show_paren_answer_bool
 %   { \bool_set_true:N \l_ustbexam_show_answer_bool }
@@ -270,10 +271,3 @@
 \renewcommand{\geq}{\geqslant}
 
 \everymath{\displaystyle}
-
-% \AddToHook{package/exam-zh-symbols/before}{%
-%   \AtBeginDocument{\let\savedsim=\sim}
-% }
-% \AddToHook{package/exam-zh-symbols/after}{%
-%   \AtBeginDocument{\global\let\sim=\savedsim}
-% }
