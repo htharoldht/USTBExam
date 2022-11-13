@@ -266,7 +266,8 @@
 \DeclareMathOperator{\sgn}{\operatorname{sgn}}
 \DeclareMathOperator{\grad}{\operatorname{grad}}
 
-\newcommand{\abs}[1]{\left| #1 \right|}
+\NewDocumentCommand \abs { m }
+  {\left| #1 \right|}
 
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
@@ -276,3 +277,35 @@
 \renewcommand{\geq}{\geqslant}
 
 \everymath{\displaystyle}
+
+% 以下为兼容性代码
+\NewDocumentCommand \makehead {}
+  {\maketitle}
+
+\NewDocumentCommand \options { m m m m }
+  {
+    \begin{choices}
+      \item #1
+      \item #2
+      \item #3
+      \item #4
+    \end{choices}
+
+  }
+
+\NewDocumentCommand \pickout { m }
+  {\paren[#1]}
+
+% % 此处的兼容性代码实在是不会, 手动替换下吧
+% 正则表达式替换: \\fillin\{(.+)\} => \\fillin[$1]
+% \let\savefillin=\fillin
+% \AtBeginDocument{
+%   \RenewDocumentCommand \fillin { m }
+%     {\savefillin[#1]}
+%   }
+
+\NewDocumentCommand \makepart { m m }
+  {\section{#1（#2）}}
+
+\NewDocumentCommand \vempty { m }{}
+\NewDocumentCommand \mynewpage { }{}
