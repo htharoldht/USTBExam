@@ -133,12 +133,9 @@
       班级~\hrulefill\,
       姓名~\hrulefill\,
       学号~\hrulefill\,
-      考试教室~\hrulefill
-    \par
-    % \vspace{0.5em}
+      考试教室~\hrulefill\\
     \ScoreTable
     \end { center }
-    \vspace*{-1em}
     \begin{notice}[label=说明：][label=\arabic*、,labelsep=0pt]
       \item 要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；
       \item 考场、学院、班、学号、姓名均需写全，不写全的试卷为废卷；
@@ -282,6 +279,10 @@
 \NewDocumentCommand \makehead {}
   {\maketitle}
 
+% 也可以用正则表达式替换
+% \\options\{(.+?)\}[%\S\n ]+?\{(.+?)\}[%\S\n ]+?\{(.+?)\}[%\S\n ]+?\{(.+?)\}[%\S\n ]+?
+% =>
+% \\begin{choices}\n\t\t\\item $1\n\t\t\\item $2\n\t\t\\item $3\n\t\t\\item $4\n\t\\end{choices}
 \NewDocumentCommand \options { m m m m }
   {
     \begin{choices}
@@ -292,19 +293,27 @@
     \end{choices}
   }
 
+% 也可以用正则表达式替换
+% \\pickout\{([A-D])\} => \\pickout[$1]
 \NewDocumentCommand \pickout { m }
   {\paren[#1]}
 
-% % 此处的兼容性代码实在是不会, 手动替换下吧
-% 正则表达式替换: \\fillin\{(.+)\} => \\fillin[$1]
+% 也可以用正则表达式替换
+% \\fillin\{(.+)\} => \\fillin[$1]
+% % 此处的兼容性代码实在是不会
 % \let\savefillin=\fillin
 % \AtBeginDocument{
 %   \RenewDocumentCommand \fillin { m }
 %     {\savefillin[#1]}
 %   }
 
+% 也可以用正则表达式替换
+% \\makepart\{(.+?)\}\{(.+?)\} => \\section{$1（$2）}
 \NewDocumentCommand \makepart { m m }
   {\section{#1（#2）}}
 
+% 也可以用正则表达式替换
+% \\vempty\{(.+?)\} =>
+% \\mynewpage =>
 \NewDocumentCommand \vempty { m }{}
 \NewDocumentCommand \mynewpage { }{}
