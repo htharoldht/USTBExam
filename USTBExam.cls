@@ -290,7 +290,6 @@
       \item #3
       \item #4
     \end{choices}
-
   }
 
 \NewDocumentCommand \pickout { m }
