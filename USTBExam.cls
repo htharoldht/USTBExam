@@ -280,9 +280,9 @@
   {\maketitle}
 
 % 也可以用正则表达式替换
-% \\options\{(.+?)\}[%\S\n ]+?\{(.+?)\}[%\S\n ]+?\{(.+?)\}[%\S\n ]+?\{(.+?)\}[%\S\n ]+?
+% \\options\{(.+?)\}[%\n ]+\{(.+?)\}[%\n ]+?\{(.+?)\}[%\n ]+?\{(.+?)\}[%\n ]+?\n
 % =>
-% \\begin{choices}\n\t\t\\item $1\n\t\t\\item $2\n\t\t\\item $3\n\t\t\\item $4\n\t\\end{choices}
+% \\begin{choices}\n\t\t\\item $1\n\t\t\\item $2\n\t\t\\item $3\n\t\t\\item $4\n\t\\end{choices}\n
 \NewDocumentCommand \options { m m m m }
   {
     \begin{choices}
