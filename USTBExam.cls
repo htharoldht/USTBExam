@@ -233,11 +233,14 @@
   symbols/change-dfrac-style = true,
   solution/blank-type = hide,
   solution/show-answer = true,
-  solution/label-content = 解,
+  solution/label-content = {\color{blue}解},
   question/show-answer = true,
   problem/show-answer = true,
   paren/show-answer = true,
   fillin/show-answer = true,
+  paren/text-color=blue,
+  fillin/text-color=blue,
+  solution/text-color=blue,
 }
 
 \ExamPrintAnswerSet{
@@ -250,9 +253,9 @@
 }
 
 \NewDocumentEnvironment{analysis}{ O{} }
-  {\begin{solution}[label-content=解析,blank-type=none,#1]}{\end{solution}}
+  {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
 \RenewDocumentEnvironment{proof}{ O{} }
-  {\begin{solution}[label-content=证明,blank-type=hide,#1]}{\end{solution}}
+  {\begin{solution}[label-content={\color{blue}证明},blank-type=hide,#1]}{\end{solution}}
 
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
