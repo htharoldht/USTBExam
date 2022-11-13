@@ -230,7 +230,7 @@
   scoringbox/type = onecolumn,
   symbols/change-frac-style = true,
   symbols/change-dfrac-style = true,
-  solution/blank-type = hide,
+  solution/blank-type = manual,
   solution/show-answer = true,
   solution/label-content = {\color{blue}解},
   question/show-answer = true,
@@ -254,7 +254,7 @@
 \NewDocumentEnvironment{analysis}{ O{} }
   {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
 \RenewDocumentEnvironment{proof}{ O{} }
-  {\begin{solution}[label-content={\color{blue}证明},blank-type=hide,#1]}{\end{solution}}
+  {\begin{solution}[label-content={\color{blue}证明},blank-type=manual,#1]}{\end{solution}}
 
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
@@ -312,8 +312,15 @@
 \NewDocumentCommand \makepart { m m }
   {\section{#1（#2）}}
 
-% 也可以用正则表达式替换
-% \\vempty\{(.+?)\} =>
-% \\mynewpage =>
-\NewDocumentCommand \vempty { m }{}
-\NewDocumentCommand \mynewpage { }{}
+\NewDocumentCommand \vempty { m }{
+  \bool_if:NF \l__examzh_question_show_paren_answer_bool
+    {
+      \vspace*{#1}
+    }
+}
+\NewDocumentCommand \mynewpage { }{
+  \bool_if:NF \l__examzh_question_show_paren_answer_bool
+    {
+      \newpage
+    }
+}
