@@ -191,7 +191,7 @@
 
 % 计分表制作
 \NewDocumentCommand \ScoreTable {}{
-  \begin{tabularx}{\textwidth}{ |X<{\centering}|*{\l_ustbexam_num_of_sections_int}{X<{\centering}|}*{2}{c|}}
+  \begin{tabularx}{\linewidth}{ |X<{\centering}|*{\l_ustbexam_num_of_sections_int}{X<{\centering}|}*{2}{c|}}
     \hline
       题 \hspace*{1em} 号
       & \repeatcell{\l_ustbexam_num_of_sections_int }{text={\zhnumber{##1}}}
@@ -213,6 +213,7 @@
     foot-content = {
       \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
     },
+    foot-type = common,
   },
   sealline = {
     show        = true,
