@@ -219,7 +219,6 @@
     circle-show = false,
     line-type   = dotted,
     odd-info-content = {{装},{订},{线},{内},{不},{要},{答},{题}},
-
     odd-info-xshift = 12mm,
     text = {自觉遵守考试规则，诚信考试，绝不作弊},% \\装订线内不要答题},
     text-direction-vertical = true,
@@ -253,6 +252,9 @@
 
 \NewDocumentEnvironment{analysis}{ O{} }
   {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
+\NewDocumentEnvironment{note}{ O{} }
+  {\begin{solution}[label-content=【尾注】,text-color=black,show-qed=false,parbreak=true,#1]
+	\setlength{\parindent}{2em}}{\end{solution}}
 \RenewDocumentEnvironment{proof}{ O{} }
   {\begin{solution}[label-content={\color{blue}证明},blank-type=manual,#1]}{\end{solution}}
 
