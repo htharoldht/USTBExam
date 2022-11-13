@@ -112,6 +112,7 @@
       Keywords = {\l_ustbexam_pdf_keywords_str},
     },
     colorlinks = true,
+    linkcolor  = black,
   }
 }
 
