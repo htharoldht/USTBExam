@@ -264,6 +264,8 @@
 \DeclareMathOperator{\cov}{\operatorname{cov}}
 \DeclareMathOperator{\sgn}{\operatorname{sgn}}
 \DeclareMathOperator{\grad}{\operatorname{grad}}
+\DeclareMathOperator{\ch}{\operatorname{ch}}
+\DeclareMathOperator{\sh}{\operatorname{sh}}
 
 \NewDocumentCommand \abs { m }
   {\left| #1 \right|}
