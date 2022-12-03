@@ -119,7 +119,7 @@
 % 输出标题
 \RenewDocumentCommand \maketitle { }
   {
-    \par
+    \chapter{北京科技大学 \l_ustbexam_title_tl}
     \begin { center }
       \let \footnote \thanks
       {
@@ -212,6 +212,7 @@
       \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
     },
     foot-type = common,
+    show-chapter = false,
   },
   sealline = {
     show        = true,
