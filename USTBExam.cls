@@ -286,8 +286,14 @@
     \bool_if:NTF \l__examzh_solution_show_bool
     {
       \begin{pabox}[]{#1}
-        {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1} \\[2mm]}
+        \group_begin:
+        {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1}}%
+        \smallskip
+        \par
+      \group_end:
+      \begingroup
         #2
+      \endgroup
       \end{pabox}
     }
     {}
