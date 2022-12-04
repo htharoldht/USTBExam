@@ -255,9 +255,44 @@
   {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
 \NewDocumentEnvironment{note}{ O{} }
   {\begin{solution}[label-content=【尾注】,text-color=black,show-qed=false,parbreak=true,#1]
-	\setlength{\parindent}{2em}}{\end{solution}}
+  \setlength{\parindent}{2em}}{\end{solution}}
 \RenewDocumentEnvironment{proof}{ O{} }
   {\begin{solution}[label-content={\color{blue}证明},blank-type=manual,#1]}{\end{solution}}
+
+\DeclareTColorBox{pabox}{ O{ } m }{%
+  colback=blue!5!white,
+  colframe=blue!45!gray,
+  colbacktitle=blue!5!white,
+  coltitle=blue!45!gray,
+  titlerule=0mm,
+  toprule=0mm,
+  bottomrule=0mm,
+  rightrule=0mm,
+  leftrule=.5mm,
+  boxsep=0mm,
+  breakable,
+  % frame hidden,
+  % interior hidden,
+  % detach title,
+  % sharpish corners,
+  fonttitle=\bfseries,
+  label=#2,
+  % title={\faMortarBoard~ #2},
+  #1
+}
+
+\NewDocumentEnvironment{ notes }{ O{ } +b }
+  {
+    \bool_if:NTF \l__examzh_solution_show_bool
+    {
+      \begin{pabox}[]{#1}
+        {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1} \\[2mm]}
+        #2
+      \end{pabox}
+    }
+    {}
+  }
+  {}
 
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
