@@ -281,6 +281,8 @@
   #1
 }
 
+\RequirePackage{fontawesome, tikz}
+
 \NewDocumentEnvironment{ notes }{ O{ } o +b }
   {
     \bool_if:NTF \l__examzh_solution_show_bool
@@ -302,6 +304,8 @@
 
 \NewDocumentCommand \myref { m o }
   { 详见 第 ~\pageref{#1}~ 页 \IfNoValueTF{#2}{#1}{#2} }
+
+\RequirePackage{mathtools,extarrows}
 
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
