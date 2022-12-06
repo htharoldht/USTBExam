@@ -281,18 +281,18 @@
   #1
 }
 
-\NewDocumentEnvironment{ notes }{ O{ } +b }
+\NewDocumentEnvironment{ notes }{ O{ } O{ } +b }
   {
     \bool_if:NTF \l__examzh_solution_show_bool
     {
-      \begin{pabox}[]{#1}
+      \begin{pabox}[]{\IfNoValueTF{#2}{#1}{#2}}
         \group_begin:
-        {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1}}%
+        {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1}}
         \smallskip
         \par
       \group_end:
       \begingroup
-        #2
+        #3
       \endgroup
       \end{pabox}
     }
