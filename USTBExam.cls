@@ -120,28 +120,35 @@
 \RenewDocumentCommand \maketitle { }
   {
     \chapter{北京科技大学 \l_ustbexam_title_tl}
+    \begingroup
     \begin { center }
-      \let \footnote \thanks
-      {
-        \LARGE \bfseries 北京科技大学~ \int_eval:n { \l_ustbexam_year_int } -- \int_eval:n {\l_ustbexam_year_int + 1} ~学年\,%
-        第~ \l_ustbexam_semester_str{} ~学期 \par
-        \underline{\quad \l__ustbexam_course_tl \quad} \l_ustbexam_type_tl
-      }
-    \par
-    \vspace{1em}
-      院(系)~\hrulefill\,
-      班级~\hrulefill\,
-      姓名~\hrulefill\,
-      学号~\hrulefill\,
-      考试教室~\hrulefill\\
-    \ScoreTable
+    \let \footnote \thanks
+    {
+      \LARGE \bfseries 北京科技大学~ \int_eval:n { \l_ustbexam_year_int } -- \int_eval:n {\l_ustbexam_year_int + 1} ~学年\,%
+      第~ \l_ustbexam_semester_str{} ~学期 \par
+      \underline{\quad \l__ustbexam_course_tl \quad} \l_ustbexam_type_tl
+    }
     \end { center }
+    \endgroup
+    \begingroup
+    \vspace{1em}
+    院(系)~\hrulefill\,
+    班级~\hrulefill\,
+    姓名~\hrulefill\,
+    学号~\hrulefill\,
+    考试教室~\hrulefill\,\\
+    \endgroup
+    \begingroup
+    \ScoreTable
+    \endgroup
+    \begingroup
     \begin{notice}[label=说明：][label=\arabic*、,labelsep=0pt]
       \item 要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；
       \item 考场、学院、班、学号、姓名均需写全，不写全的试卷为废卷；
       \item 涂改学号及姓名的试卷为废卷；
       \item 请在试卷上答题，在其他纸张上的解答一律无效.
     \end{notice}
+    \endgroup
   }
 
 % 输出计分表
