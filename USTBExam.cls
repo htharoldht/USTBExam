@@ -215,6 +215,11 @@
   \cfoot{\thepage}
 }
 
+\RequirePackage{tocloft}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\contentsname}{\centerline{\LARGE 目\quad 录}}
+\tocloftpagestyle{myEmptyPage}
+
 \setlength{\parindent}{0em}
 
 \examsetup{
