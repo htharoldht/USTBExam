@@ -209,7 +209,11 @@
   \end{tabularx}
 }
 
-\RequirePackage{siunitx}
+% 页眉页脚
+\fancypagestyle{myEmptyPage}{
+  \fancyhf{}
+  \cfoot{\thepage}
+}
 
 \setlength{\parindent}{0em}
 
