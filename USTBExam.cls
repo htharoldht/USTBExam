@@ -119,6 +119,7 @@
 % 输出标题
 \RenewDocumentCommand \maketitle { }
   {
+    \cleardoublepage
     \chapter{北京科技大学 \l_ustbexam_title_tl}
     \begingroup
     \begin { center }
@@ -346,9 +347,13 @@
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
 
+\DeclareMathOperator{\re}{\operatorname{e}}
+\DeclareMathOperator{\ri}{\operatorname{i}}
 \DeclareMathOperator{\cov}{\operatorname{cov}}
 \DeclareMathOperator{\sgn}{\operatorname{sgn}}
-\DeclareMathOperator{\grad}{\operatorname{grad}}
+\DeclareMathOperator{\rot}{\operatorname{\mathbf{rot}}}
+\DeclareMathOperator{\grad}{\operatorname{\mathbf{grad}}}
+\DeclareMathOperator{\divd}{\operatorname{div}}
 \DeclareMathOperator{\ch}{\operatorname{ch}}
 \DeclareMathOperator{\sh}{\operatorname{sh}}
 
@@ -361,6 +366,7 @@
 \renewcommand{\leq}{\leqslant}
 \renewcommand{\ge}{\geqslant}
 \renewcommand{\geq}{\geqslant}
+\renewcommand\parallel{\mathrel{/\mskip-2.5mu/}}
 
 \everymath{\displaystyle}
 
