@@ -299,9 +299,6 @@
 
 \RequirePackage{fontawesome, tikz}
 
-\RequirePackage[shortlabels]{enumitem}
-\setlist[enumerate]{(1), left=\parindent, parsep=0pt}
-
 \NewDocumentEnvironment{ notes }{ O{ } o +b }
   {
     \bool_if:NTF \l__examzh_solution_show_bool
