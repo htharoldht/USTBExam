@@ -215,6 +215,26 @@
   \cfoot{\thepage}
 }
 
+\NewDocumentCommand \backcover { }
+  {
+    \int_if_odd:nTF \c@page
+    {
+      { \clearpage \hbox:n { } \thispagestyle{empty} }
+      { \setcounter{page}{\thepage - 1} }
+    }
+    {
+      { \cleardoublepage \hbox:n { } \thispagestyle{empty} }
+      { \setcounter{page}{\thepage - 2} }
+    }
+  }
+
+\RenewDocumentCommand \cleardoublepage { }
+  {
+    \clearpage
+    \int_if_odd:nF \c@page
+      { \hbox:n { } \thispagestyle { empty } \newpage }
+  }
+
 \RequirePackage{tocloft}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
 \renewcommand{\contentsname}{\centerline{\LARGE 目\quad 录}}
