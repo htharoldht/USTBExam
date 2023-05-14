@@ -264,6 +264,7 @@
     text-format  = \normalfont,
     text-xshift = 20mm
   },
+  choices/label=(\Alph*),
   scoringbox/type = onecolumn,
   symbols/change-frac-style = true,
   symbols/change-dfrac-style = true,
