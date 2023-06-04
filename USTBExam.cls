@@ -370,6 +370,7 @@
 \renewcommand\parallel{\mathrel{/\mskip-2.5mu/}}
 
 \everymath{\displaystyle}
+\allowdisplaybreaks
 
 % 以下为兼容性代码
 \NewDocumentCommand \makehead {}
