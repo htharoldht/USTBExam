@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2022-11-04} {v2.0} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2024-10-21} {v2.2.0} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
   \AtBeginDocument{\let\savedsim=\sim}
@@ -269,7 +269,6 @@
   symbols/change-frac-style = true,
   symbols/change-dfrac-style = true,
   solution/blank-type = manual,
-  solution/show-answer = true,
   solution/label-content = {\color{blue}解},
   question/show-answer = true,
   problem/show-answer = true,
@@ -280,14 +279,32 @@
   solution/text-color=blue,
 }
 
-\ExamPrintAnswerSet{
-  sealline/show=true,
-  paren/show-answer=false,
-  paren/show-paren=true,
-  fillin/show-answer=false,
-  solution/show-solution=false,
-  fillin/no-answer-type=none,
-}
+% 根据 exam-zh 版本号进行设置
+\@ifclasslater { exam-zh } { 2024/02/12 }
+  {
+    % 版本大于等于 0.2.1
+    \keys_set:nn { exam-zh } { solution/show-solution = show-stay }
+    \ExamPrintAnswerSet{
+      sealline/show=true,
+      paren/show-answer=false,
+      paren/show-paren=true,
+      fillin/show-answer=false,
+      solution/show-solution=hide,
+      fillin/no-answer-type=none,
+    }
+  }
+  {
+    % 版本小于 0.2.1
+    \keys_set:nn { exam-zh } { solution/show-answer = true }
+    \ExamPrintAnswerSet{
+      sealline/show=true,
+      paren/show-answer=false,
+      paren/show-paren=true,
+      fillin/show-answer=false,
+      solution/show-solution=false,
+      fillin/no-answer-type=none,
+    }
+  }
 
 \NewDocumentEnvironment{analysis}{ O{} }
   {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
