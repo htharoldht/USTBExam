@@ -145,7 +145,7 @@
     \begingroup
     \begin{notice}[label=说明：][label=\arabic*、,labelsep=0pt]
       \item 要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；
-      \item 考场、学院、班、学号、姓名均需写全，不写全的试卷为废卷；
+      \item 考场、学院、班级、学号、姓名均需写全，不写全的试卷为废卷；
       \item 涂改学号及姓名的试卷为废卷；
       \item 请在试卷上答题，在其他纸张上的解答一律无效.
     \end{notice}
@@ -365,15 +365,16 @@
 \RequirePackage{fixdif}
 \newdif{\dif}{\mathrm{d}}
 
-\DeclareMathOperator{\re}{\operatorname{e}}
-\DeclareMathOperator{\ri}{\operatorname{i}}
-\DeclareMathOperator{\cov}{\operatorname{cov}}
-\DeclareMathOperator{\sgn}{\operatorname{sgn}}
-\DeclareMathOperator{\rot}{\operatorname{\mathbf{rot}}}
-\DeclareMathOperator{\grad}{\operatorname{\mathbf{grad}}}
-\DeclareMathOperator{\divd}{\operatorname{div}}
-\DeclareMathOperator{\ch}{\operatorname{ch}}
-\DeclareMathOperator{\sh}{\operatorname{sh}}
+\DeclareMathOperator{\re}{e}
+\DeclareMathOperator{\ri}{i}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\rot}{\mathbf{rot}}
+\DeclareMathOperator{\grad}{\mathbf{grad}}
+\DeclareMathOperator{\divd}{div}
+\DeclareMathOperator{\ch}{ch}
+\DeclareMathOperator{\sh}{sh}
+\DeclareMathOperator{\arccot}{arccot}
 
 \NewDocumentCommand \abs { m }
   {\left| #1 \right|}
