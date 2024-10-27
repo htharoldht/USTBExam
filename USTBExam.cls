@@ -270,7 +270,7 @@
     symbols/change-frac-style = true,
     symbols/change-dfrac-style = true,
     solution/blank-type = manual,
-    solution/label-content = {\color{blue}解},
+    solution/label-content = {\color{blue}{\heiti 解}},
     question/show-answer = true,
     problem/show-answer = true,
     paren/show-answer = true,
@@ -336,7 +336,7 @@
 
 \NewDocumentEnvironment{analysis}{ O{} }
   {
-    \begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{
+    \begin{solution}[label-content={\color{blue}{\heiti 解析}},blank-type=none,#1]}{
     \end{solution}
   }
 \NewDocumentEnvironment{note}{ O{} }
@@ -347,7 +347,7 @@
   }
 \RenewDocumentEnvironment{proof}{ O{} }
   {
-    \begin{solution}[label-content={\color{blue}证明},blank-type=manual,#1]}{
+    \begin{solution}[label-content={\color{blue}{\heiti 证明}},blank-type=manual,#1]}{
     \end{solution}
   }
 
