@@ -3,11 +3,11 @@
 \ProvidesExplClass {USTBExam} {2024-10-21} {v2.2.0} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
-  \AtBeginDocument{\let\savedsim=\sim}
-}
+    \AtBeginDocument{\let\savedsim=\sim}
+  }
 \AddToHook{package/exam-zh-symbols/after}{%
-  \AtBeginDocument{\let\sim=\savedsim}
-}
+    \AtBeginDocument{\let\sim=\savedsim}
+  }
 
 % 加载文档类和宏包
 \LoadClass {exam-zh}
@@ -33,7 +33,7 @@
 % 试卷头里的年份
 \int_new:N \l_ustbexam_year_int
 \NewDocumentCommand \Year { m }
-{ \int_set:Nn \l_ustbexam_year_int {#1} }
+  { \int_set:Nn \l_ustbexam_year_int {#1} }
 
 % 试卷头里的学期
 \str_new:N \l_ustbexam_semester_str
@@ -75,10 +75,10 @@
 \tl_new:N \l_ustbexam_type_tl
 \NewDocumentCommand \Type { m }
   { \tl_set:Nn \l_ustbexam_type_tl {
-      \bool_if:NTF \l__examzh_question_show_paren_answer_bool
-      {\l_ustbexam_suffix_tl （#1 卷解析）}
-      {\l_ustbexam_suffix_tl （#1 卷）}
-    }
+        \bool_if:NTF \l__examzh_question_show_paren_answer_bool
+          {\l_ustbexam_suffix_tl （#1 卷解析）}
+          {\l_ustbexam_suffix_tl （#1 卷）}
+      }
   }
 
 % 试卷头计分表中大题的数目
@@ -104,17 +104,17 @@
   { \str_set:Nn \l_ustbexam_pdf_keywords_str {#1} }
 
 \AtBeginDocument{%
-  \hypersetup{
-    pdfinfo={
-      Title    = {\l_ustbexam_title_tl},
-      Author   = {\@author},
-      Subject  = {\l_ustbexam_pdf_subject_str},
-      Keywords = {\l_ustbexam_pdf_keywords_str},
-    },
-    colorlinks = true,
-    linkcolor  = black,
+    \hypersetup{
+        pdfinfo={
+            Title    = {\l_ustbexam_title_tl},
+            Author   = {\@author},
+            Subject  = {\l_ustbexam_pdf_subject_str},
+            Keywords = {\l_ustbexam_pdf_keywords_str},
+          },
+        colorlinks = true,
+        linkcolor  = black,
+      }
   }
-}
 
 % 输出标题
 \RenewDocumentCommand \maketitle { }
@@ -124,11 +124,11 @@
     \begingroup
     \begin { center }
     \let \footnote \thanks
-    {
-      \LARGE \bfseries 北京科技大学~ \int_eval:n { \l_ustbexam_year_int } -- \int_eval:n {\l_ustbexam_year_int + 1} ~学年\,%
-      第~ \l_ustbexam_semester_str{} ~学期 \par
-      \underline{\quad \l__ustbexam_course_tl \quad} \l_ustbexam_type_tl
-    }
+      {
+        \LARGE \bfseries 北京科技大学~ \int_eval:n { \l_ustbexam_year_int } -- \int_eval:n {\l_ustbexam_year_int + 1} ~学年\,%
+        第~ \l_ustbexam_semester_str{} ~学期 \par
+        \underline{\quad \l__ustbexam_course_tl \quad} \l_ustbexam_type_tl
+      }
     \end { center }
     \endgroup
     \begingroup
@@ -160,36 +160,36 @@
 \newcounter{repeatlast}
 
 \NewDocumentCommand{\repeatcell}{mm}
- {% #1 = number of repeats
-  % #2 = key-value pairs
-  \oaheix_repeatcell:nn { #1 } { #2 }
- }
+  {% #1 = number of repeats
+    % #2 = key-value pairs
+    \oaheix_repeatcell:nn { #1 } { #2 }
+  }
 
 \tl_new:N \l__oaheix_repeatcells_body_tl
 
 \keys_define:nn { oaheix/repeatcells }
- {
-  text .code:n = \cs_gset_protected:Nn \__oaheix_repeatcell_text:n { #1 },
-  start .code:n = \setcounter{repeatstart}{#1},
- }
+  {
+    text .code:n = \cs_gset_protected:Nn \__oaheix_repeatcell_text:n { #1 },
+    start .code:n = \setcounter{repeatstart}{#1},
+  }
 
 \cs_new_protected:Nn \oaheix_repeatcell:nn
- {
-  \keys_set:nn { oaheix/repeatcells } { #2 }
-  \tl_clear:N \l__oaheix_repeatcells_body_tl
-  \int_step_inline:nnn
-   { \value{repeatstart} + 1 }
-   { \value{repeatstart} + #1 }
-   {
-    \tl_put_right:Nx \l__oaheix_repeatcells_body_tl
-     {
-      \int_compare:nF { ##1 = \value{repeatstart} + 1 } { & }
-      \__oaheix_repeatcell_text:n { ##1 }
-     }
-   }
-  \tl_use:N \l__oaheix_repeatcells_body_tl
-  \setcounter{repeatlast} { \int_eval:n { \value{repeatstart} + #1 } }
- }
+  {
+    \keys_set:nn { oaheix/repeatcells } { #2 }
+    \tl_clear:N \l__oaheix_repeatcells_body_tl
+    \int_step_inline:nnn
+      { \value{repeatstart} + 1 }
+      { \value{repeatstart} + #1 }
+      {
+        \tl_put_right:Nx \l__oaheix_repeatcells_body_tl
+          {
+            \int_compare:nF { ##1 = \value{repeatstart} + 1 } { & }
+            \__oaheix_repeatcell_text:n { ##1 }
+          }
+      }
+    \tl_use:N \l__oaheix_repeatcells_body_tl
+    \setcounter{repeatlast} { \int_eval:n { \value{repeatstart} + #1 } }
+  }
 
 \NewExpandableDocumentCommand{\lastvalue}{}{\int_eval:n { \value{repeatlast} } }
 
@@ -197,36 +197,37 @@
 
 % 计分表制作
 \NewDocumentCommand \ScoreTable {}{
-  \begin{tabularx}{\linewidth}{ |X<{\centering}|*{\l_ustbexam_num_of_sections_int}{X<{\centering}|}*{2}{c|}}
-    \hline
+    \begin{tabularx}
+      {\linewidth}{ |X<{\centering}|*{\l_ustbexam_num_of_sections_int}{X<{\centering}|}*{2}{c|}}
+      \hline
       题 \hspace*{1em} 号
-      & \repeatcell{\l_ustbexam_num_of_sections_int }{text={\zhnumber{##1}}}
-      & 课程考核成绩    \\
-    \hline
+       & \repeatcell{\l_ustbexam_num_of_sections_int }{text={\zhnumber{##1}}}
+       & 课程考核成绩                                                               \\
+      \hline
       得 \hspace*{1em} 分
-      & \eline{\int_eval:n { \l_ustbexam_num_of_sections_int + 1 } }
-    \\
-    \hline
-  \end{tabularx}
-}
+       & \eline{\int_eval:n { \l_ustbexam_num_of_sections_int + 1 } }
+      \\
+      \hline
+    \end{tabularx}
+  }
 
 % 页眉页脚
 \fancypagestyle{myEmptyPage}{
-  \fancyhf{}
-  \cfoot{\thepage}
-}
+    \fancyhf{}
+    \cfoot{\thepage}
+  }
 
 \NewDocumentCommand \backcover { }
   {
     \int_if_odd:nTF \c@page
-    {
-      { \clearpage \hbox:n { } \thispagestyle{empty} }
-      { \setcounter{page}{\thepage - 1} }
-    }
-    {
-      { \cleardoublepage \hbox:n { } \thispagestyle{empty} }
-      { \setcounter{page}{\thepage - 2} }
-    }
+      {
+        { \clearpage \hbox:n { } \thispagestyle{empty} }
+          { \setcounter{page}{\thepage - 1} }
+      }
+      {
+        { \cleardoublepage \hbox:n { } \thispagestyle{empty} }
+          { \setcounter{page}{\thepage - 2} }
+      }
   }
 
 \RenewDocumentCommand \cleardoublepage { }
@@ -244,40 +245,40 @@
 \setlength{\parindent}{0em}
 
 \examsetup{
-  page = {
-    foot-content = {
-      \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
-    },
-    foot-type = common,
-    show-chapter = false,
-  },
-  sealline = {
-    show        = true,
-    scope       = mod-2,
-    circle-show = false,
-    line-type   = dotted,
-    odd-info-content = {{装},{订},{线},{内},{不},{要},{答},{题}},
-    odd-info-xshift = 12mm,
-    text = {自觉遵守考试规则，诚信考试，绝不作弊},% \\装订线内不要答题},
-    text-direction-vertical = true,
-    text-width = 0.6\textheight,
-    text-format  = \normalfont,
-    text-xshift = 20mm
-  },
-  choices/label=(\Alph*),
-  scoringbox/type = onecolumn,
-  symbols/change-frac-style = true,
-  symbols/change-dfrac-style = true,
-  solution/blank-type = manual,
-  solution/label-content = {\color{blue}解},
-  question/show-answer = true,
-  problem/show-answer = true,
-  paren/show-answer = true,
-  fillin/show-answer = true,
-  paren/text-color=blue,
-  fillin/text-color=blue,
-  solution/text-color=blue,
-}
+    page = {
+        foot-content = {
+            \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
+          },
+        foot-type = common,
+        show-chapter = false,
+      },
+    sealline = {
+        show        = true,
+        scope       = mod-2,
+        circle-show = false,
+        line-type   = dotted,
+        odd-info-content = {{装},{订},{线},{内},{不},{要},{答},{题}},
+        odd-info-xshift = 12mm,
+        text = {自觉遵守考试规则，诚信考试，绝不作弊},% \\装订线内不要答题},
+        text-direction-vertical = true,
+        text-width = 0.6\textheight,
+        text-format  = \normalfont,
+        text-xshift = 20mm
+      },
+    choices/label=(\Alph*),
+    scoringbox/type = onecolumn,
+    symbols/change-frac-style = true,
+    symbols/change-dfrac-style = true,
+    solution/blank-type = manual,
+    solution/label-content = {\color{blue}解},
+    question/show-answer = true,
+    problem/show-answer = true,
+    paren/show-answer = true,
+    fillin/show-answer = true,
+    paren/text-color=blue,
+    fillin/text-color=blue,
+    solution/text-color=blue,
+  }
 
 % 根据 exam-zh 版本号进行设置
 \@ifclasslater { exam-zh } { 2024/02/12 }
@@ -285,102 +286,111 @@
     % 版本大于等于 0.2.1
     \keys_set:nn { exam-zh } { solution/show-solution = show-stay }
     \ExamPrintAnswerSet{
-      sealline/show=true,
-      paren/show-answer=false,
-      paren/show-paren=true,
-      fillin/show-answer=false,
-      solution/show-solution=hide,
-      fillin/no-answer-type=none,
-    }
+        sealline/show=true,
+        paren/show-answer=false,
+        paren/show-paren=true,
+        fillin/show-answer=false,
+        solution/show-solution=hide,
+        fillin/no-answer-type=none,
+      }
   }
   {
     % 版本小于 0.2.1
     \keys_set:nn { exam-zh } { solution/show-answer = true }
     \ExamPrintAnswerSet{
-      sealline/show=true,
-      paren/show-answer=false,
-      paren/show-paren=true,
-      fillin/show-answer=false,
-      solution/show-solution=false,
-      fillin/no-answer-type=none,
-    }
+        sealline/show=true,
+        paren/show-answer=false,
+        paren/show-paren=true,
+        fillin/show-answer=false,
+        solution/show-solution=false,
+        fillin/no-answer-type=none,
+      }
   }
 
 % 定义 makeBackCover 命令
 \NewDocumentCommand{\makeBackCover}{}{
-  % 移除密封线
-  \RemoveFromHook { shipout / background } [ sealline ]
+    % 移除密封线
+    \RemoveFromHook { shipout / background } [ sealline ]
 
-  \clearpage
-  % 检查当前页码是奇数还是偶数
-  \ifodd\thepage
-    % 如果是奇数页，添加两页空白页
-    \begingroup
-    \pagestyle{empty}
-    \null\newpage
-    \endgroup
-    % 调整 lastpage 页码
-    \addtocounter{page}{-1}
-  \else
-    % 如果是偶数页，添加一页空白页
-    \begingroup
-    \pagestyle{empty}
-    \null\newpage
-    \null\newpage
-    % 调整 lastpage 页码
-    \addtocounter{page}{-2}
-    \endgroup
-  \fi
-}
+    \clearpage
+    % 检查当前页码是奇数还是偶数
+    \ifodd\thepage
+      % 如果是奇数页，添加两页空白页
+      \begingroup
+      \pagestyle{empty}
+      \null\newpage
+      \endgroup
+      % 调整 lastpage 页码
+      \addtocounter{page}{-1}
+    \else
+      % 如果是偶数页，添加一页空白页
+      \begingroup
+      \pagestyle{empty}
+      \null\newpage
+      \null\newpage
+      % 调整 lastpage 页码
+      \addtocounter{page}{-2}
+      \endgroup
+    \fi
+  }
 
 \NewDocumentEnvironment{analysis}{ O{} }
-  {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
+  {
+    \begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{
+    \end{solution}
+  }
 \NewDocumentEnvironment{note}{ O{} }
-  {\begin{solution}[label-content=【尾注】,text-color=black,show-qed=false,parbreak=true,#1]
-  \setlength{\parindent}{2em}}{\end{solution}}
+  {
+    \begin{solution}[label-content=【尾注】,text-color=black,show-qed=false,parbreak=true,#1]
+      \setlength{\parindent}{2em}}{
+    \end{solution}
+  }
 \RenewDocumentEnvironment{proof}{ O{} }
-  {\begin{solution}[label-content={\color{blue}证明},blank-type=manual,#1]}{\end{solution}}
+  {
+    \begin{solution}[label-content={\color{blue}证明},blank-type=manual,#1]}{
+    \end{solution}
+  }
 
 \DeclareTColorBox{pabox}{ O{ } m }{%
-  colback=blue!5!white,
-  colframe=blue!45!gray,
-  colbacktitle=blue!5!white,
-  coltitle=blue!45!gray,
-  titlerule=0mm,
-  toprule=0mm,
-  bottomrule=0mm,
-  rightrule=0mm,
-  leftrule=.5mm,
-  boxsep=0mm,
-  breakable,
-  % frame hidden,
-  % interior hidden,
-  % detach title,
-  % sharpish corners,
-  fonttitle=\bfseries,
-  label=#2,
-  % title={\faMortarBoard~ #2},
-  #1
-}
+    colback=blue!5!white,
+    colframe=blue!45!gray,
+    colbacktitle=blue!5!white,
+    coltitle=blue!45!gray,
+    titlerule=0mm,
+    toprule=0mm,
+    bottomrule=0mm,
+    rightrule=0mm,
+    leftrule=.5mm,
+    boxsep=0mm,
+    breakable,
+    % frame hidden,
+    % interior hidden,
+    % detach title,
+    % sharpish corners,
+    fonttitle=\bfseries,
+    label=#2,
+    % title={\faMortarBoard~ #2},
+    #1
+  }
 
 \RequirePackage{fontawesome, tikz}
 
 \NewDocumentEnvironment{ notes }{ O{ } o +b }
   {
     \bool_if:NTF \l__examzh_solution_show_bool
-    {
-      \begin{pabox}[]{\IfNoValueTF{#2}{#1}{#2}}
-        \group_begin:
-        {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1}}
-        \smallskip
-        \par
-      \group_end:
-      \begingroup
-        #3
-      \endgroup
-      \end{pabox}
-    }
-    {}
+      {
+        \begin{pabox}[]{\IfNoValueTF{#2}{#1}{#2}}
+          \group_begin:
+          {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1}}
+          \smallskip
+          \par
+          \group_end:
+          \begingroup
+          #3
+          \endgroup
+        \end{pabox}
+      }
+      {}
   }
   {}
 
@@ -455,14 +465,14 @@
   {\section{#1（#2）}}
 
 \NewDocumentCommand \vempty { m }{
-  \bool_if:NF \l__examzh_question_show_paren_answer_bool
-    {
-      \vspace*{#1}
-    }
-}
+    \bool_if:NF \l__examzh_question_show_paren_answer_bool
+      {
+        \vspace*{#1}
+      }
+  }
 \NewDocumentCommand \mynewpage { }{
-  \bool_if:NF \l__examzh_question_show_paren_answer_bool
-    {
-      \newpage
-    }
-}
+    \bool_if:NF \l__examzh_question_show_paren_answer_bool
+      {
+        \newpage
+      }
+  }
