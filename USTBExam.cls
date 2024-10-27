@@ -306,6 +306,33 @@
     }
   }
 
+% 定义 makeBackCover 命令
+\NewDocumentCommand{\makeBackCover}{}{
+  % 移除密封线
+  \RemoveFromHook { shipout / background } [ sealline ]
+
+  \clearpage
+  % 检查当前页码是奇数还是偶数
+  \ifodd\thepage
+    % 如果是奇数页，添加两页空白页
+    \begingroup
+    \pagestyle{empty}
+    \null\newpage
+    \endgroup
+    % 调整 lastpage 页码
+    \addtocounter{page}{-1}
+  \else
+    % 如果是偶数页，添加一页空白页
+    \begingroup
+    \pagestyle{empty}
+    \null\newpage
+    \null\newpage
+    % 调整 lastpage 页码
+    \addtocounter{page}{-2}
+    \endgroup
+  \fi
+}
+
 \NewDocumentEnvironment{analysis}{ O{} }
   {\begin{solution}[label-content={\color{blue}解析},blank-type=none,#1]}{\end{solution}}
 \NewDocumentEnvironment{note}{ O{} }
