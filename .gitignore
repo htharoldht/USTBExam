@@ -245,3 +245,4 @@ TSWLatexianTemp*
 
 *.zip
 test.tex
+**.sh

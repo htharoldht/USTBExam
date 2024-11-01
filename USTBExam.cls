@@ -377,7 +377,7 @@
 
 \NewDocumentEnvironment{ notes }{ O{ } o +b }
   {
-    \bool_if:NTF \l__examzh_solution_show_bool
+    \bool_if:NTF \g__examzh_solution_show_bool
       {
         \begin{pabox}[]{\IfNoValueTF{#2}{#1}{#2}}
           \group_begin:
