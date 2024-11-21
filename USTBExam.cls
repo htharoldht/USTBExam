@@ -217,6 +217,7 @@
     \cfoot{\thepage}
   }
 
+% 已废弃
 \NewDocumentCommand \backcover { }
   {
     \int_if_odd:nTF \c@page
@@ -284,7 +285,10 @@
 \@ifclasslater { exam-zh } { 2024/02/12 }
   {
     % 版本大于等于 0.2.1
-    \keys_set:nn { exam-zh } { solution/show-solution = show-stay }
+    \keys_set:nn { exam-zh } {
+        solution/show-solution = show-stay,
+        textfigure/fig-pos=right,
+      }
     \ExamPrintAnswerSet{
         sealline/show=true,
         paren/show-answer=false,
