@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2024-10-21} {v2.2.0} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2024-12-1} {v2.3.3} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -21,99 +21,128 @@
 \NewDocumentCommand \ustbexamsetup { m }
   { \keys_set:nn { ustb-exam } {#1} }
 
-% 定义 ustb-exam 宏包选项
 
-% 是否显示答案
-% 以下弃用
-% \bool_new:N \l_ustbexam_show_answer_bool
-% \bool_if:NTF \l__examzh_question_show_paren_answer_bool
-%   { \bool_set_true:N \l_ustbexam_show_answer_bool }
-%   { \bool_set_false:N \l_ustbexam_show_answer_bool }
-
-% 试卷头里的年份
-\int_new:N \l_ustbexam_year_int
-\NewDocumentCommand \Year { m }
-  { \int_set:Nn \l_ustbexam_year_int {#1} }
-
-% 试卷头里的学期
-\str_new:N \l_ustbexam_semester_str
-\NewDocumentCommand \Semester { m }
-  { \str_set:Nn \l_ustbexam_semester_str {#1} }
-
-% 试卷头里的课程
-\tl_new:N \l__ustbexam_course_tl
-\NewDocumentCommand \Course { o m }
+% 全局配置, 暂时有 bug, 未能实现模板加水印图片, 在试卷里加即可
+\keys_define:nn { ustb-exam / global }
   {
-    \IfNoValueTF {#1}
-      {
-        % 默认使用自然宽度
-        \hbox_set:Nn \l_tmpa_box {#2}
-        \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
-        \tl_set:Nn \l__ustbexam_course_tl
-          {
-            \__examzh_spread_box:nn { \l_tmpa_dim } {#2}
-          }
-      }
-      {
-        % 手动调整宽度
-        \tl_set:Nn \l__ustbexam_course_tl
-          {
-            \__examzh_spread_box:nn {#1} {#2}
-          }
-      }
+    watermark .tl_set:N = \l__ustbexam_global_watermark,
+  }
+\keys_set:nn { ustb-exam / global }
+  {
+    watermark = {},
+  }
+\keys_define:nn { ustb-exam }
+  { global .meta:nn = { ustb-exam / global } {#1} }
 
-    \str_new:N \l__ustbexam_course_str
-    \str_set:Nn \l__ustbexam_course_str { #2 }
+\RequirePackage{background}
+
+\IfNoValueTF \l__ustbexam_global_watermark
+  {
+    \backgroundsetup{}
+  }
+  {
+    \backgroundsetup{
+        scale=1, % 调整大小
+        angle=0, % 调整角度
+        opacity=0.15, % 调整透明度
+        pages=all, % 应用到所有页面
+        position=current~page.center, % 确保在页面正中心
+        contents={
+            \includegraphics[width=0.6\paperwidth, keepaspectratio]{\l__ustbexam_global_watermark}
+          }
+      }
+  }
+
+% 试卷内标题处的参数
+\keys_define:nn { ustb-exam / title }
+  {
+    year       .int_set:N = \l__ustbexam_title_year_int,
+    semester   .tl_set:N  = \l__ustbexam_title_semester,
+    course     .tl_set:N  = \l__ustbexam_title_course_str,
+    suffix     .tl_set:N  = \l__ustbexam_title_suffix_str,
+    type       .str_set:N = \l__ustbexam_title_type_str,
+    total-part .int_set:N = \l__ustbexam_title_total_part_int,
+  }
+\keys_set:nn { ustb-exam / title }
+  {
+    year       = {\the\year},
+    semester   = {一},
+    course     = {微积分AI},
+    suffix     = {false},
+    type       = {A},
+    total-part = {4},
+  }
+\keys_define:nn { ustb-exam }
+  { title .meta:nn = { ustb-exam / title } {#1} }
+
+% PDF 配置
+\keys_define:nn { ustb-exam / pdf }
+  {
+    title    .tl_set:N = \l__ustbexam_pdf_title,
+    subject  .tl_set:N = \l__ustbexam_pdf_subject,
+    author   .tl_set:N = \l__ustbexam_pdf_author,
+    keywords .tl_set:N = \l__ustbexam_pdf_keywords,
+  }
+\keys_set:nn { ustb-exam / pdf }
+  {
+    title    = \l_ustbexam_title_tl,
+    subject  = {},
+    author   = \@author,
+    keywords = {},
+  }
+\keys_define:nn { ustb-exam }
+  { pdf .meta:nn = { ustb-exam / pdf } {#1} }
+
+\AtBeginDocument{%
+    \hypersetup{
+        pdfinfo={
+            Title    = {\l__ustbexam_pdf_title},
+            Author   = {\l__ustbexam_pdf_author},
+            Subject  = {\l__ustbexam_pdf_subject},
+            Keywords = {\l__ustbexam_pdf_keywords},
+          },
+        colorlinks = true,
+        linkcolor  = black,
+      }
+  }
+
+% title 里的课程名
+\tl_new:N \l__ustbexam_title_course_real
+\IfNoValueF {\l__ustbexam_title_course_str}
+  {
+    \hbox_set:Nn \l_tmpa_box {\l__ustbexam_title_course_str}
+    \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
+    \tl_set:Nn \l__ustbexam_title_course_real
+      {
+        \__examzh_spread_box:nn { \l_tmpa_dim } { \l__ustbexam_title_course_str }
+      }
   }
 
 % 是否期中
-\tl_new:N \l_ustbexam_suffix_tl
-\NewDocumentCommand \Suffix { m }
-  {\tl_set:Nn \l_ustbexam_suffix_tl {#1 试卷} }
-
-% 试卷头里的类型，如A/B/模拟等
-\tl_new:N \l_ustbexam_type_tl
-\NewDocumentCommand \Type { m }
-  { \tl_set:Nn \l_ustbexam_type_tl {
-        \bool_if:NTF \l__examzh_question_show_paren_answer_bool
-          {\l_ustbexam_suffix_tl （#1 卷解析）}
-          {\l_ustbexam_suffix_tl （#1 卷）}
-      }
+\tl_new:N \l__ustbexam_title_suffix_real
+\IfNoValueTF \l__ustbexam_title_suffix_str
+  {
+    \tl_set:Nn \l__ustbexam_title_suffix_real { 试卷 }
+  }
+  {
+      \tl_set:Nn \l__ustbexam_title_suffix_real { \l__ustbexam_title_suffix_str 试卷 }
   }
 
-% 试卷头计分表中大题的数目
-\int_new:N \l_ustbexam_num_of_sections_int
-\NewDocumentCommand \TotalPart { m }
-  { \int_set:Nn \l_ustbexam_num_of_sections_int {#1} }
+% 试卷类型
+\tl_new:N \l__ustbexam_title_type_real
+\tl_set:Nn \l__ustbexam_title_type_real
+  {
+    \bool_if:NTF \l__examzh_question_show_paren_answer_bool
+      { （\str_use:N \l__ustbexam_title_type_str 卷解析）}
+      { （\str_use:N \l__ustbexam_title_type_str 卷） }
+  }
 
 % 标题
 \tl_new:N \l_ustbexam_title_tl
 \tl_set:Nn \l_ustbexam_title_tl
   {
-    \int_eval:n { \l_ustbexam_year_int } -- \int_eval:n {\l_ustbexam_year_int + 1} ~学年\,%
-    第 \l_ustbexam_semester_str{} 学期 \l__ustbexam_course_str \l_ustbexam_type_tl\
-  }
-
-% PDF 主题信息
-\str_new:N \l_ustbexam_pdf_subject_str
-\NewDocumentCommand \Subject { m }
-  { \str_set:Nn \l_ustbexam_pdf_subject_str {#1} }
-% PDF 关键词信息
-\str_new:N \l_ustbexam_pdf_keywords_str
-\NewDocumentCommand \Keywords { m }
-  { \str_set:Nn \l_ustbexam_pdf_keywords_str {#1} }
-
-\AtBeginDocument{%
-    \hypersetup{
-        pdfinfo={
-            Title    = {\l_ustbexam_title_tl},
-            Author   = {\@author},
-            Subject  = {\l_ustbexam_pdf_subject_str},
-            Keywords = {\l_ustbexam_pdf_keywords_str},
-          },
-        colorlinks = true,
-        linkcolor  = black,
-      }
+    \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
+    第 \l__ustbexam_title_semester{} 学期 \l__ustbexam_title_course_str \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
   }
 
 % 输出标题
@@ -125,9 +154,9 @@
     \begin { center }
     \let \footnote \thanks
       {
-        \LARGE \bfseries 北京科技大学~ \int_eval:n { \l_ustbexam_year_int } -- \int_eval:n {\l_ustbexam_year_int + 1} ~学年\,%
-        第~ \l_ustbexam_semester_str{} ~学期 \par
-        \underline{\quad \l__ustbexam_course_tl \quad} \l_ustbexam_type_tl
+        \LARGE \bfseries 北京科技大学~ \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
+        第~ \l__ustbexam_title_semester{} ~学期 \par
+        \underline{\quad \l__ustbexam_title_course_real \quad} \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
       }
     \end { center }
     \endgroup
@@ -154,13 +183,15 @@
 
 % 输出计分表
 \RequirePackage{makecell,tabularx}
+
+% https://tex.stackexchange.com/questions/625226/alternative-to-repeatcell-from-the-interfaces-package-since-texlive-2021/625249#625249
 % we need LaTeX counters and not expl3 ones because of tabularx two-step process
 \newcounter{repeatstart}
 \newcounter{repeatcurrent}
 \newcounter{repeatlast}
 
-\NewDocumentCommand{\repeatcell}{mm}
-  {% #1 = number of repeats
+\NewDocumentCommand{\repeatcell}{ m m }
+  { % #1 = number of repeats
     % #2 = key-value pairs
     \oaheix_repeatcell:nn { #1 } { #2 }
   }
@@ -169,7 +200,7 @@
 
 \keys_define:nn { oaheix/repeatcells }
   {
-    text .code:n = \cs_gset_protected:Nn \__oaheix_repeatcell_text:n { #1 },
+    text  .code:n  = \cs_gset_protected:Nn \__oaheix_repeatcell_text:n { #1 },
     start .code:n = \setcounter{repeatstart}{#1},
   }
 
@@ -196,20 +227,38 @@
 \AtBeginEnvironment{tabularx}{\setcounter{repeatstart}{0}}
 
 % 计分表制作
-\NewDocumentCommand \ScoreTable {}{
+\NewDocumentCommand \ScoreTable { } {
     \begin{tabularx}
-      {\linewidth}{ |X<{\centering}|*{\l_ustbexam_num_of_sections_int}{X<{\centering}|}*{2}{c|}}
+      {\linewidth}{ |X<{\centering}|*{\l__ustbexam_title_total_part_int}{X<{\centering}|}*{2}{c|}}
       \hline
       题 \hspace*{1em} 号
-       & \repeatcell{\l_ustbexam_num_of_sections_int }{text={\zhnumber{##1}}}
-       & 课程考核成绩                                                               \\
+       & \repeatcell{\l__ustbexam_title_total_part_int }{text={\zhnumber{##1}}}
+       & 课程考核成绩                                                                 \\
       \hline
       得 \hspace*{1em} 分
-       & \eline{\int_eval:n { \l_ustbexam_num_of_sections_int + 1 } }
+       & \eline{\int_eval:n { \l__ustbexam_title_total_part_int + 1 } }
       \\
       \hline
     \end{tabularx}
   }
+
+% 默认图片路径
+\graphicspath{
+  {./figs}{../figs}{body/figs}
+  {./Figs}{../Figs}{body/Figs}
+}
+
+% 更新日志
+\RequirePackage{changelog,translations}
+\DeclareTranslation{English}{changelog-Added}{新增}
+\DeclareTranslation{English}{changelog-Changed}{修改}
+\DeclareTranslation{English}{changelog-Deprecated}{即将舍弃}
+\DeclareTranslation{English}{changelog-Removed}{移除}
+\DeclareTranslation{English}{changelog-Fixed}{纠错}
+\DeclareTranslation{English}{changelog-Security}{安全}
+\DeclareTranslation{English}{changelog-Miscellaneous}{其他}
+\DeclareTranslation{English}{changelog-Unreleased}{即将发布}
+\DeclareTranslation{English}{changelog-Yanked}{警醒}
 
 % 页眉页脚
 \fancypagestyle{myEmptyPage}{
@@ -272,6 +321,7 @@
     symbols/change-dfrac-style = true,
     solution/blank-type = manual,
     solution/label-content = {\color{blue}{\heiti 解}},
+    solution/qedsymbol = {\color{blue}{$\square$}},
     question/show-answer = true,
     problem/show-answer = true,
     paren/show-answer = true,
@@ -311,8 +361,81 @@
       }
   }
 
+% 封面配置
+\keys_define:nn { ustb-exam / cover }
+  {
+    top      .tl_set:N = \l__ustbexam_cover_top,
+    title    .tl_set:N = \l__ustbexam_cover_title,
+    subtitle .tl_set:N = \l__ustbexam_cover_subtitle,
+    author   .tl_set:N = \l__ustbexam_cover_author,
+    date     .tl_set:N = \l__ustbexam_cover_date,
+    bottom   .tl_set:N = \l__ustbexam_cover_bottom,
+    bgimg    .tl_set:N = \l__ustbexam_cover_bgimg,
+  }
+\keys_set:nn { ustb-exam / cover }
+  {
+    top      = 北京科技大学,
+    title    = 高等数学AI,
+    subtitle = 历年期中试卷合集,
+    author   = 黄腾,
+    date     = \today,
+    bottom   = 假装有出版社,
+    bgimg    = {},
+  }
+\keys_define:nn { ustb-exam }
+  { cover .meta:nn = { ustb-exam / cover } {#1} }
+
+% 定义 makeCover 命令
+\NewDocumentCommand \makeCover { }
+  {
+    \newgeometry{right=3.5cm, vmargin=2.5cm, headsep=0.5cm}
+    \pagestyle{myEmptyPage}
+    \begin{titlepage}
+      \setcounter{page}{0}
+      \tl_if_empty:NF {\l__ustbexam_cover_bgimg}
+        {
+          \begin{tikzpicture}[remember~picture, overlay]
+            \node[opacity=0.2,rotate=30] at ([shift={(-2.0cm, 0)}]current~page.center)
+            {
+              \includegraphics[width=23cm]{\l__ustbexam_cover_bgimg}
+            };
+          \end{tikzpicture}
+        }
+
+      \centering
+
+      \makebox[0.5\textwidth][s]{\huge \bfseries \l__ustbexam_cover_top}
+      \par\addvspace{2.5cm}
+
+      \begin{tcolorbox}[
+          width=0.8\textwidth, height=4cm,
+          halign=center, valign=center,
+          blanker,
+          frame~hidden, boxsep=0pt,
+          borderline~horizontal={2pt}{0pt}{black},
+          hyphenationfix,
+        ]
+        \Huge \bfseries
+        \makebox[0.6\textwidth][s]{\l__ustbexam_cover_title}
+        \par
+        \makebox[0.75\textwidth][s]{\l__ustbexam_cover_subtitle}
+      \end{tcolorbox}
+      \par\addvspace{1.5cm}
+
+      \parbox{0.4\textwidth}{\Large \centering \l__ustbexam_cover_author}
+      \par\addvspace{1cm}
+
+      {\l__ustbexam_cover_date}
+      \par\vfill
+
+      \makebox[0.3\textwidth][s]{\large \l__ustbexam_cover_bottom}
+    \end{titlepage}
+    \restoregeometry
+  }
+
 % 定义 makeBackCover 命令
-\NewDocumentCommand{\makeBackCover}{}{
+\NewDocumentCommand \makeBackCover { }
+  {
     % 移除密封线
     \RemoveFromHook { shipout / background } [ sealline ]
 
@@ -355,11 +478,12 @@
     \end{solution}
   }
 
-\DeclareTColorBox{pabox}{ O{ } m }{%
-    colback=blue!5!white,
-    colframe=blue!45!gray,
-    colbacktitle=blue!5!white,
-    coltitle=blue!45!gray,
+\DeclareTColorBox{pabox}{ O{ } m O{ blue } }
+  {
+    colback=#3!5!white,
+    colframe=#3!45!gray,
+    colbacktitle=#3!5!white,
+    coltitle=#3!45!gray,
     titlerule=0mm,
     toprule=0mm,
     bottomrule=0mm,
@@ -379,18 +503,18 @@
 
 \RequirePackage{fontawesome, tikz}
 
-\NewDocumentEnvironment{ notes }{ O{ } o +b }
+\NewDocumentEnvironment{ notes }{ O{ } o o +b }
   {
     \bool_if:NTF \g__examzh_solution_show_bool
       {
-        \begin{pabox}[]{\IfNoValueTF{#2}{#1}{#2}}
+        \begin{pabox}[]{\IfNoValueTF{#2}{#1}{#2}}[#3]
           \group_begin:
           {\color{blue!45!gray} \faMortarBoard~ {\bfseries #1}}
           \smallskip
           \par
           \group_end:
           \begingroup
-          #3
+          #4
           \endgroup
         \end{pabox}
       }
@@ -432,6 +556,40 @@
 \allowdisplaybreaks
 
 % 以下为兼容性代码
+% ===== 弃用 begin =====
+
+% 试卷头里的年份
+\NewDocumentCommand \Year { m }
+  { \int_set:Nn \l__ustbexam_title_year_int {#1} }
+
+% 试卷头里的学期
+\NewDocumentCommand \Semester { m }
+  { \tl_set:Nn \l__ustbexam_title_semester {#1} }
+
+% 试卷头里的课程
+\NewDocumentCommand \Course { m }
+  { \str_set:Nn \l__ustbexam_title_course_str { #1 } }
+
+% 是否期中
+\NewDocumentCommand \Suffix { m }
+  { \tl_set:Nn \l__ustbexam_title_suffix_str {#1 试卷} }
+
+% 试卷头里的类型，如A/B/模拟等
+\NewDocumentCommand \Type { m }
+  { \tl_set:Nn \l__ustbexam_title_type_str { #1 } }
+
+% 试卷头计分表中大题的数目
+\NewDocumentCommand \TotalPart { m }
+  { \int_set:Nn \l__ustbexam_title_total_part_int {#1} }
+
+% PDF 主题信息
+\NewDocumentCommand \Subject { m }
+  { \str_set:Nn \l__ustbexam_pdf_subject {#1} }
+
+% PDF 关键词信息
+\NewDocumentCommand \Keywords { m }
+  { \str_set:Nn \l__ustbexam_pdf_keywords {#1} }
+
 \NewDocumentCommand \makehead {}
   {\maketitle}
 
@@ -468,6 +626,8 @@
 \NewDocumentCommand \makepart { m m }
   {\section{#1（#2）}}
 
+% ===== 弃用 end =====
+
 \NewDocumentCommand \vempty { m }{
     \bool_if:NF \l__examzh_question_show_paren_answer_bool
       {
@@ -480,3 +640,4 @@
         \newpage
       }
   }
+
