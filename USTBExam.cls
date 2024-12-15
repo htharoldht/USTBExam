@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2024-12-1} {v2.3.3} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2024-10-21} {v2.2.0} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -21,8 +21,7 @@
 \NewDocumentCommand \ustbexamsetup { m }
   { \keys_set:nn { ustb-exam } {#1} }
 
-
-% 全局配置, 暂时有 bug, 未能实现模板加水印图片, 在试卷里加即可
+% 全局配置
 \keys_define:nn { ustb-exam / global }
   {
     watermark .tl_set:N = \l__ustbexam_global_watermark,
@@ -154,6 +153,7 @@
     \begin { center }
     \let \footnote \thanks
       {
+        \kaishu
         \LARGE \bfseries 北京科技大学~ \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
         第~ \l__ustbexam_title_semester{} ~学期 \par
         \underline{\quad \l__ustbexam_title_course_real \quad} \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
@@ -161,23 +161,26 @@
     \end { center }
     \endgroup
     \begingroup
-    \vspace{1em}
-    院(系)~\hrulefill\,
-    班级~\hrulefill\,
-    姓名~\hrulefill\,
-    学号~\hrulefill\,
-    考试教室~\hrulefill\,\\
+    {
+      \kaishu
+      院(系)\hrulefill\,~
+      班级\hrulefill\,~
+      姓名\hrulefill\,~
+      学号\hrulefill\,~
+      考试教室\hrulefill\,
+    }
     \endgroup
     \begingroup
-    \ScoreTable
+    {\kaishu \bfseries \ScoreTable}
     \endgroup
     \begingroup
-    \begin{notice}[label=说明：][label=\arabic*、,labelsep=0pt]
-      \item 要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；
-      \item 考场、学院、班级、学号、姓名均需写全，不写全的试卷为废卷；
-      \item 涂改学号及姓名的试卷为废卷；
-      \item 请在试卷上答题，在其他纸张上的解答一律无效.
-    \end{notice}
+    {\par 说明：}
+    \begin{minipage}[t]{.9\textwidth}
+        1、要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；\par
+        2、 考场、学院、班级、学号、姓名均需写全，不写全的试卷为废卷；\par
+        3、 涂改学号及姓名的试卷为废卷；\par
+        4、 请在试卷上答题，在其他纸张上的解答一律无效.
+    \end{minipage}
     \endgroup
   }
 
@@ -228,18 +231,20 @@
 
 % 计分表制作
 \NewDocumentCommand \ScoreTable { } {
-    \begin{tabularx}
-      {\linewidth}{ |X<{\centering}|*{\l__ustbexam_title_total_part_int}{X<{\centering}|}*{2}{c|}}
-      \hline
-      题 \hspace*{1em} 号
-       & \repeatcell{\l__ustbexam_title_total_part_int }{text={\zhnumber{##1}}}
-       & 课程考核成绩                                                                 \\
-      \hline
-      得 \hspace*{1em} 分
-       & \eline{\int_eval:n { \l__ustbexam_title_total_part_int + 1 } }
-      \\
-      \hline
-    \end{tabularx}
+    \begin{ center }
+      \begin{tabularx}
+        {\textwidth}{ |p{4em}<{\centering}|*{\l__ustbexam_title_total_part_int}{X<{\centering}|}*{2}{c|}}
+        \hline
+        题号
+        & \repeatcell{\l__ustbexam_title_total_part_int }{text={\zhnumber{##1}}}
+        & 课程考核成绩                                                                 \\
+        \hline
+        得分
+        & \eline{\int_eval:n { \l__ustbexam_title_total_part_int + 1 } }
+        \\
+        \hline
+      \end{tabularx}
+    \end{ center }
   }
 
 % 默认图片路径
@@ -297,7 +302,7 @@
 \examsetup{
     page = {
         foot-content = {
-            \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
+            \kaishu \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
           },
         foot-type = common,
         show-chapter = false,
