@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2024-10-21} {v2.2.0} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2024-12-22} {v2.3.4} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -13,7 +13,7 @@
 \LoadClass {exam-zh}
 
 % 处理文档类选项
-\PassOptionsToClass { UTF8 , scheme = chinese, openany } { exam-zh }
+\PassOptionsToClass { UTF8,  scheme = chinese, openany } { exam-zh }
 \DeclareOption* { \PassOptionsToClass { \CurrentOption } { exam-zh } }
 \ProcessOptions*
 
@@ -33,21 +33,20 @@
 \keys_define:nn { ustb-exam }
   { global .meta:nn = { ustb-exam / global } {#1} }
 
-\RequirePackage{background}
-
-\IfNoValueTF \l__ustbexam_global_watermark
+\AtEndPreamble
   {
-    \backgroundsetup{}
-  }
-  {
-    \backgroundsetup{
-        scale=1, % 调整大小
-        angle=0, % 调整角度
-        opacity=0.15, % 调整透明度
-        pages=all, % 应用到所有页面
-        position=current~page.center, % 确保在页面正中心
-        contents={
-            \includegraphics[width=0.6\paperwidth, keepaspectratio]{\l__ustbexam_global_watermark}
+    \tl_if_empty:NF { \l__ustbexam_global_watermark }
+      {
+        \RequirePackage{background}
+        \backgroundsetup{
+            scale=1, % 调整大小
+            angle=0, % 调整角度
+            opacity=0.15, % 调整透明度
+            pages=all, % 应用到所有页面
+            position=current~page.center, % 确保在页面正中心
+            contents={
+                \includegraphics[width=0.6\paperwidth, keepaspectratio]{\l__ustbexam_global_watermark}
+              }
           }
       }
   }
@@ -92,7 +91,8 @@
 \keys_define:nn { ustb-exam }
   { pdf .meta:nn = { ustb-exam / pdf } {#1} }
 
-\AtBeginDocument{%
+\AtBeginDocument
+  {
     \hypersetup{
         pdfinfo={
             Title    = {\l__ustbexam_pdf_title},
@@ -107,7 +107,7 @@
 
 % title 里的课程名
 \tl_new:N \l__ustbexam_title_course_real
-\IfNoValueF {\l__ustbexam_title_course_str}
+\str_if_empty:NF {\l__ustbexam_title_course_str}
   {
     \hbox_set:Nn \l_tmpa_box {\l__ustbexam_title_course_str}
     \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
@@ -119,7 +119,7 @@
 
 % 是否期中
 \tl_new:N \l__ustbexam_title_suffix_real
-\IfNoValueTF \l__ustbexam_title_suffix_str
+\str_if_empty:NF \l__ustbexam_title_suffix_str
   {
     \tl_set:Nn \l__ustbexam_title_suffix_real { 试卷 }
   }
@@ -143,6 +143,14 @@
     \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
     第 \l__ustbexam_title_semester{} 学期 \l__ustbexam_title_course_str \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
   }
+
+% 定义计数器, 自动获取大题数目
+\newcounter{sectioncounter}
+
+% 使用钩子在每次调用 \section 和 \section* 时递增计数器
+\AddToHook{ cmd / section / before }{ \stepcounter{sectioncounter} }
+
+% 暂时不做自动获取, 有困难需解决
 
 % 输出标题
 \RenewDocumentCommand \maketitle { }
@@ -171,7 +179,7 @@
     }
     \endgroup
     \begingroup
-    {\kaishu \bfseries \ScoreTable}
+    {\kaishu \bfseries \ScoreTable { \l__ustbexam_title_total_part_int } }
     \endgroup
     \begingroup
     {\par 说明：}
@@ -230,20 +238,28 @@
 \AtBeginEnvironment{tabularx}{\setcounter{repeatstart}{0}}
 
 % 计分表制作
-\NewDocumentCommand \ScoreTable { } {
+\NewDocumentCommand \ScoreTable { m } {
     \begin{ center }
-      \begin{tabularx}
-        {\textwidth}{ |p{4em}<{\centering}|*{\l__ustbexam_title_total_part_int}{X<{\centering}|}*{2}{c|}}
-        \hline
-        题号
-        & \repeatcell{\l__ustbexam_title_total_part_int }{text={\zhnumber{##1}}}
-        & 课程考核成绩                                                                 \\
-        \hline
-        得分
-        & \eline{\int_eval:n { \l__ustbexam_title_total_part_int + 1 } }
-        \\
-        \hline
-      \end{tabularx}
+      \int_compare:nTF { #1 > 0 }
+        {
+          \begin{tabularx}
+            {\textwidth}{ |p{4em}<{\centering} *{#1}{|X<{\centering}} | c |}
+            \hline
+            题号 & \repeatcell{#1}{text = \zhnumber{##1}} & \makecell[c]{{\tiny ~} \\[-.9em]课程考核成绩\\[-.9em]{\tiny ~}} \\
+            \hline
+            得分 & \eline{\int_eval:n { #1 + 1} }                                  \\
+            \hline
+          \end{tabularx}
+        }{
+          \begin{tabularx}
+            {\textwidth}{ |p{4em}<{\centering} | X<{\centering} | }
+            \hline
+            题号 & \makecell[c]{{\tiny ~} \\[-.9em]课程考核成绩\\[-.9em]{\tiny ~}} \\
+            \hline
+            得分 &                        \\
+            \hline
+          \end{tabularx}
+        }
     \end{ center }
   }
 
@@ -397,7 +413,7 @@
     \pagestyle{myEmptyPage}
     \begin{titlepage}
       \setcounter{page}{0}
-      \tl_if_empty:NF {\l__ustbexam_cover_bgimg}
+      \tl_if_empty:NF { \l__ustbexam_cover_bgimg }
         {
           \begin{tikzpicture}[remember~picture, overlay]
             \node[opacity=0.2,rotate=30] at ([shift={(-2.0cm, 0)}]current~page.center)
