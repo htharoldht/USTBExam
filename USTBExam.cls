@@ -269,6 +269,9 @@
   {./Figs}{../Figs}{body/Figs}
 }
 
+% 默认的 enumerate 环境
+\setlist[enumerate]{label=(\arabic*), left=\parindent, align=left, itemsep=0pt, parsep=0pt, topsep=0pt}
+
 % 更新日志
 \RequirePackage{changelog,translations}
 \DeclareTranslation{English}{changelog-Added}{新增}
