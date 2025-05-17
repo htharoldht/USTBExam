@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2024-12-22} {v2.3.4} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2025-05-17} {v2.3.5} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -66,7 +66,7 @@
     year       = {\the\year},
     semester   = {一},
     course     = {微积分AI},
-    suffix     = {false},
+    suffix     = {},
     type       = {A},
     total-part = {4},
   }
@@ -107,25 +107,29 @@
 
 % title 里的课程名
 \tl_new:N \l__ustbexam_title_course_real
-\str_if_empty:NF {\l__ustbexam_title_course_str}
-  {
-    \hbox_set:Nn \l_tmpa_box {\l__ustbexam_title_course_str}
-    \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
-    \tl_set:Nn \l__ustbexam_title_course_real
-      {
-        \__examzh_spread_box:nn { \l_tmpa_dim } { \l__ustbexam_title_course_str }
-      }
-  }
+\AtBeginDocument{
+  \str_if_empty:NF {\l__ustbexam_title_course_str}
+    {
+      \hbox_set:Nn \l_tmpa_box {\l__ustbexam_title_course_str}
+      \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
+      \tl_set:Nn \l__ustbexam_title_course_real
+        {
+          \__examzh_spread_box:nn { \l_tmpa_dim } { \l__ustbexam_title_course_str }
+        }
+    }
+}
 
 % 是否期中
 \tl_new:N \l__ustbexam_title_suffix_real
-\str_if_empty:NF \l__ustbexam_title_suffix_str
-  {
-    \tl_set:Nn \l__ustbexam_title_suffix_real { 试卷 }
-  }
-  {
-      \tl_set:Nn \l__ustbexam_title_suffix_real { \l__ustbexam_title_suffix_str 试卷 }
-  }
+\tl_set:Nn \l__ustbexam_title_suffix_real { 试卷 }
+
+% 在文档开始前处理 suffix
+\AtBeginDocument{
+  \tl_if_empty:NF \l__ustbexam_title_suffix_str
+    {
+      \tl_set:Nx \l__ustbexam_title_suffix_real { \l__ustbexam_title_suffix_str 试卷 }
+    }
+}
 
 % 试卷类型
 \tl_new:N \l__ustbexam_title_type_real
@@ -138,11 +142,13 @@
 
 % 标题
 \tl_new:N \l_ustbexam_title_tl
-\tl_set:Nn \l_ustbexam_title_tl
-  {
-    \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
-    第 \l__ustbexam_title_semester{} 学期 \l__ustbexam_title_course_str \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
-  }
+\AtBeginDocument{
+  \tl_set:Nn \l_ustbexam_title_tl
+    {
+      \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
+      第 \l__ustbexam_title_semester{} 学期 \l__ustbexam_title_course_str \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
+    }
+}
 
 % 定义计数器, 自动获取大题数目
 \newcounter{sectioncounter}
@@ -596,7 +602,7 @@
 
 % 是否期中
 \NewDocumentCommand \Suffix { m }
-  { \tl_set:Nn \l__ustbexam_title_suffix_str {#1 试卷} }
+  { \tl_set:Nn \l__ustbexam_title_suffix_str {#1} }
 
 % 试卷头里的类型，如A/B/模拟等
 \NewDocumentCommand \Type { m }
