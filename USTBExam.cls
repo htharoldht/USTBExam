@@ -156,6 +156,12 @@
 % 使用钩子在每次调用 \section 和 \section* 时递增计数器
 \AddToHook{ cmd / section / before }{ \stepcounter{sectioncounter} }
 
+% 脚注编号每页清零
+\AddToHook{ shipout / before }
+  {
+    \global\c@footnote=0
+  }
+
 % 暂时不做自动获取, 有困难需解决
 
 % 输出标题
