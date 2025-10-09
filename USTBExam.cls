@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2025-05-17} {v2.3.5} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2025-05-17} {v2.3.6} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -108,16 +108,16 @@
 % title 里的课程名
 \tl_new:N \l__ustbexam_title_course_real
 \AtBeginDocument{
-  \str_if_empty:NF {\l__ustbexam_title_course_str}
-    {
-      \hbox_set:Nn \l_tmpa_box {\l__ustbexam_title_course_str}
-      \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
-      \tl_set:Nn \l__ustbexam_title_course_real
-        {
-          \__examzh_spread_box:nn { \l_tmpa_dim } { \l__ustbexam_title_course_str }
-        }
-    }
-}
+    \str_if_empty:NF {\l__ustbexam_title_course_str}
+      {
+        \hbox_set:Nn \l_tmpa_box {\l__ustbexam_title_course_str}
+        \dim_set:Nn \l_tmpa_dim { \box_wd:N \l_tmpa_box * 2 }
+        \tl_set:Nn \l__ustbexam_title_course_real
+          {
+            \__examzh_spread_box:nn { \l_tmpa_dim } { \l__ustbexam_title_course_str }
+          }
+      }
+  }
 
 % 是否期中
 \tl_new:N \l__ustbexam_title_suffix_real
@@ -125,11 +125,11 @@
 
 % 在文档开始前处理 suffix
 \AtBeginDocument{
-  \tl_if_empty:NF \l__ustbexam_title_suffix_str
-    {
-      \tl_set:Nx \l__ustbexam_title_suffix_real { \l__ustbexam_title_suffix_str 试卷 }
-    }
-}
+    \tl_if_empty:NF \l__ustbexam_title_suffix_str
+      {
+        \tl_set:Nx \l__ustbexam_title_suffix_real { \l__ustbexam_title_suffix_str 试卷 }
+      }
+  }
 
 % 试卷类型
 \tl_new:N \l__ustbexam_title_type_real
@@ -143,12 +143,12 @@
 % 标题
 \tl_new:N \l_ustbexam_title_tl
 \AtBeginDocument{
-  \tl_set:Nn \l_ustbexam_title_tl
-    {
-      \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
-      第 \l__ustbexam_title_semester{} 学期 \l__ustbexam_title_course_str \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
-    }
-}
+    \tl_set:Nn \l_ustbexam_title_tl
+      {
+        \int_eval:n { \l__ustbexam_title_year_int } -- \int_eval:n {\l__ustbexam_title_year_int + 1} ~学年\,%
+        第 \l__ustbexam_title_semester{} 学期 \l__ustbexam_title_course_str \l__ustbexam_title_suffix_real \l__ustbexam_title_type_real
+      }
+  }
 
 % 定义计数器, 自动获取大题数目
 \newcounter{sectioncounter}
@@ -181,25 +181,25 @@
     \end { center }
     \endgroup
     \begingroup
-    {
-      \kaishu
-      院(系)\hrulefill\,~
-      班级\hrulefill\,~
-      姓名\hrulefill\,~
-      学号\hrulefill\,~
-      考试教室\hrulefill\,
-    }
+      {
+        \kaishu
+        院(系)\hrulefill\,~
+        班级\hrulefill\,~
+        姓名\hrulefill\,~
+        学号\hrulefill\,~
+        考试教室\hrulefill\,
+      }
     \endgroup
     \begingroup
-    {\kaishu \bfseries \ScoreTable { \l__ustbexam_title_total_part_int } }
+      {\kaishu \bfseries \ScoreTable { \l__ustbexam_title_total_part_int } }
     \endgroup
     \begingroup
-    {\par 说明：}
+      {\par 说明：}
     \begin{minipage}[t]{.9\textwidth}
-        1、要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；\par
-        2、 考场、学院、班级、学号、姓名均需写全，不写全的试卷为废卷；\par
-        3、 涂改学号及姓名的试卷为废卷；\par
-        4、 请在试卷上答题，在其他纸张上的解答一律无效.
+      1、要求正确地写出主要计算或推导过程，过程有错或只写答案者不得分；\par
+      2、 考场、学院、班级、学号、姓名均需写全，不写全的试卷为废卷；\par
+      3、 涂改学号及姓名的试卷为废卷；\par
+      4、 请在试卷上答题，在其他纸张上的解答一律无效.
     \end{minipage}
     \endgroup
   }
@@ -252,34 +252,34 @@
 % 计分表制作
 \NewDocumentCommand \ScoreTable { m } {
     \begin{ center }
-      \int_compare:nTF { #1 > 0 }
-        {
-          \begin{tabularx}
-            {\textwidth}{ |p{4em}<{\centering} *{#1}{|X<{\centering}} | c |}
-            \hline
-            题号 & \repeatcell{#1}{text = \zhnumber{##1}} & \makecell[c]{{\tiny ~} \\[-.9em]课程考核成绩\\[-.9em]{\tiny ~}} \\
-            \hline
-            得分 & \eline{\int_eval:n { #1 + 1} }                                  \\
-            \hline
-          \end{tabularx}
-        }{
-          \begin{tabularx}
-            {\textwidth}{ |p{4em}<{\centering} | X<{\centering} | }
-            \hline
-            题号 & \makecell[c]{{\tiny ~} \\[-.9em]课程考核成绩\\[-.9em]{\tiny ~}} \\
-            \hline
-            得分 &                        \\
-            \hline
-          \end{tabularx}
-        }
+    \int_compare:nTF { #1 > 0 }
+      {
+        \begin{tabularx}
+          {\textwidth}{ |p{4em}<{\centering} *{#1}{|X<{\centering}} | c |}
+          \hline
+          题号 & \repeatcell{#1}{text = \zhnumber{##1}} & \makecell[c]{{\tiny ~} \\[-.9em]课程考核成绩\\[-.9em]{\tiny ~}} \\
+          \hline
+          得分 & \eline{\int_eval:n { #1 + 1} }                                  \\
+          \hline
+        \end{tabularx}
+      }{
+        \begin{tabularx}
+          {\textwidth}{ |p{4em}<{\centering} | X<{\centering} | }
+          \hline
+          题号 & \makecell[c]{{\tiny ~} \\[-.9em]课程考核成绩\\[-.9em]{\tiny ~}} \\
+          \hline
+          得分 &                        \\
+          \hline
+        \end{tabularx}
+      }
     \end{ center }
   }
 
 % 默认图片路径
 \graphicspath{
-  {./figs}{../figs}{body/figs}
-  {./Figs}{../Figs}{body/Figs}
-}
+    {./figs}{../figs}{body/figs}
+      {./Figs}{../Figs}{body/Figs}
+  }
 
 % 默认的 enumerate 环境
 \setlist[enumerate]{label=(\arabic*), left=\parindent, align=left, itemsep=0pt, parsep=0pt, topsep=0pt}
@@ -330,10 +330,12 @@
 
 \setlength{\parindent}{0em}
 
+\RequirePackage{zref-user, refcount}
+
 \examsetup{
     page = {
         foot-content = {
-            \kaishu \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\lastpage@lastpage~页
+            \kaishu \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\getpagerefnumber{RealLastPage}~页
           },
         foot-type = common,
         show-chapter = false,
@@ -432,9 +434,9 @@
         {
           \begin{tikzpicture}[remember~picture, overlay]
             \node[opacity=0.2,rotate=30] at ([shift={(-2.0cm, 0)}]current~page.center)
-            {
-              \includegraphics[width=23cm]{\l__ustbexam_cover_bgimg}
-            };
+              {
+                \includegraphics[width=23cm]{\l__ustbexam_cover_bgimg}
+              };
           \end{tikzpicture}
         }
 
@@ -443,13 +445,14 @@
       \makebox[0.5\textwidth][s]{\huge \bfseries \l__ustbexam_cover_top}
       \par\addvspace{2.5cm}
 
-      \begin{tcolorbox}[
-          width=0.8\textwidth, height=4cm,
-          halign=center, valign=center,
-          blanker,
-          frame~hidden, boxsep=0pt,
-          borderline~horizontal={2pt}{0pt}{black},
-          hyphenationfix,
+      \begin{tcolorbox}
+        [
+        width=0.8\textwidth, height=4cm,
+        halign=center, valign=center,
+        blanker,
+        frame~hidden, boxsep=0pt,
+        borderline~horizontal={2pt}{0pt}{black},
+        hyphenationfix,
         ]
         \Huge \bfseries
         \makebox[0.6\textwidth][s]{\l__ustbexam_cover_title}
@@ -461,7 +464,7 @@
       \parbox{0.4\textwidth}{\Large \centering \l__ustbexam_cover_author}
       \par\addvspace{1cm}
 
-      {\l__ustbexam_cover_date}
+        {\l__ustbexam_cover_date}
       \par\vfill
 
       \makebox[0.3\textwidth][s]{\large \l__ustbexam_cover_bottom}
@@ -476,25 +479,22 @@
     \RemoveFromHook { shipout / background } [ sealline ]
 
     \clearpage
-    % 检查当前页码是奇数还是偶数
-    \ifodd\thepage
-      % 如果是奇数页，添加两页空白页
-      \begingroup
-      \pagestyle{empty}
-      \null\newpage
-      \endgroup
-      % 调整 lastpage 页码
-      \addtocounter{page}{-1}
-    \else
-      % 如果是偶数页，添加一页空白页
-      \begingroup
-      \pagestyle{empty}
-      \null\newpage
-      \null\newpage
-      % 调整 lastpage 页码
-      \addtocounter{page}{-2}
-      \endgroup
-    \fi
+    \int_if_odd:nTF { \value{page} }
+      {
+        % 当前页是奇数页，插入一页空白页
+        \group_begin:
+        \pagestyle{empty}
+        \null \newpage
+        \group_end:
+      }
+      {
+        % 当前页是偶数页，插入两页空白页
+        \group_begin:
+        \pagestyle{empty}
+        \null \newpage
+        \null \newpage
+        \group_end:
+      }
   }
 
 \NewDocumentEnvironment{analysis}{ O{} }
