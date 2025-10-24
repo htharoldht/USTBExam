@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2025-05-17} {v2.3.6} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2025-10-24} {v2.3.7} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -332,10 +332,17 @@
 
 \RequirePackage{zref-user, refcount}
 
+% 定义一个命令：取 RealLastPage 页码 - 1，且不小于 1
+\NewDocumentCommand \realLastPageMinusOne {} {
+    \int_eval:n {
+        \int_max:nn { 1 } { \zref@extractdefault{RealLastPage}{page}{0} - 1 }
+      }
+  }
+
 \examsetup{
     page = {
         foot-content = {
-            \kaishu \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\getpagerefnumber{RealLastPage}~页
+            \kaishu \l_ustbexam_title_tl \, 第~\thepage~页 \quad 共~\realLastPageMinusOne~页
           },
         foot-type = common,
         show-chapter = false,
@@ -470,6 +477,16 @@
       \makebox[0.3\textwidth][s]{\large \l__ustbexam_cover_bottom}
     \end{titlepage}
     \restoregeometry
+  }
+
+% 添加 RealLastPage 标记
+\AddToHook{cmd/makeBackCover/before}{
+    % 在正文最后一页打标记
+    \zlabel{RealLastPage}
+  }
+\AddToHook{cmd/backcover/before}{
+    % 在正文最后一页打标记
+    \zlabel{RealLastPage}
   }
 
 % 定义 makeBackCover 命令
