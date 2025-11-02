@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2025-10-24} {v2.3.7} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2025-11-02} {v2.3.8} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -282,7 +282,17 @@
   }
 
 % 默认的 enumerate 环境
-\setlist[enumerate]{label=(\arabic*), left=\parindent, align=left, itemsep=0pt, parsep=0pt, topsep=0pt}
+\setlist[enumerate]{label=(\arabic*), left=\parindent, itemsep=0pt, align=left, parsep=0pt, topsep=0pt}
+\setlist[enumerate,2]{label=(\roman*), left=0em, labelsep=-0.5em, itemsep=0pt, parsep=0pt, topsep=0pt}
+% 默认的 itemize 环境
+\setlist[itemize]{left=\parindent, itemsep=0pt, parsep=0pt, topsep=0pt}
+\setlist[itemize,2]{left=0em, labelsep=-0.5em, itemsep=0pt, parsep=0pt, topsep=0pt}
+% 默认的 description 环境
+\setlist[description]{leftmargin=\parindent, itemsep=0pt, parsep=0pt, topsep=0pt}
+\setlist[description,2]{left=0em, labelsep=-0.5em, itemsep=0pt, parsep=0pt, topsep=0pt}
+
+\newlist{inenum}{enumerate*}{2}
+\setlist[inenum]{(1), itemjoin={\quad}}
 
 % 更新日志
 \RequirePackage{changelog,translations}
