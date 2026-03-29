@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{expl3}
-\ProvidesExplClass {USTBExam} {2025-11-02} {v2.3.8} {An exam template for USTB}
+\ProvidesExplClass {USTBExam} {2026-03-30} {v2.3.9} {An exam template for USTB}
 
 \AddToHook{package/exam-zh-symbols/before}{%
     \AtBeginDocument{\let\savedsim=\sim}
@@ -523,6 +523,32 @@
         \group_end:
       }
   }
+
+\cs_new:Npn \__ustbexam_previous_question_index:
+  {
+    \int_eval:n { \g__examzh_question_index_int - 1 }
+  }
+
+\cs_new_protected:Npn \__ustbexam_question_star_mark:
+  {
+    \makebox[0pt][r]{\smash{\hspace*{-0.5em}*}}
+  }
+
+\AtBeginDocument
+  {
+    \pdfstringdefDisableCommands
+      {
+        \def\__ustbexam_question_star_mark:{*}
+      }
+  }
+
+\NewDocumentEnvironment{question*}{ O{} +b }
+  {
+    \begin{question}[index=\__ustbexam_previous_question_index:,label={\__ustbexam_question_star_mark:\arabic*.},#1]
+      #2
+    \end{question}
+  }
+  {}
 
 \NewDocumentEnvironment{analysis}{ O{} }
   {
